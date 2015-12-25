@@ -36,8 +36,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :cataract, Cataract.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "cataract_dev",
+  username: "cataract",
+  password: "eSie5thie4pieGu5xib9",
+  database: "cataract_elixir_dev",
   hostname: "localhost",
   pool_size: 10
