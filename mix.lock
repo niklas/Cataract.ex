@@ -14,4 +14,5 @@
   "poison": {:hex, :poison, "1.5.0"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.10.0"},
+  "procket": {:git, "https://github.com/msantos/procket.git", "28d18658b3e9fe41aaeab3852dd0f5e108ab4838", []},
   "ranch": {:hex, :ranch, "1.2.0"}}
