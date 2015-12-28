@@ -12,7 +12,13 @@ defmodule Cataract.Rtorrent do
   end
 
   def ping(socket) do
-    data = '12345678'
+    null = "\0"
+    data = "64:" <>
+    "CONTENT_LENGTH" <> null <> "100" <> null <>
+    "SCGI" <> null <> "1" <> null <>
+    "REQUEST_METHOD" <> null <> "POST" <> null <>
+    "REQUEST_URI" <> null <> "/RPC2" <> null <>
+    ",<?xml version=\"1.0\" ?><methodCall><methodName>system.listMethods</methodName><params/></methodCall>"
     :ok = :afunix.send(socket, data)
     case :afunix.recv(socket, 1000, 10) do
       {:ok, resp} ->
