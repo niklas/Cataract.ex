@@ -1,7 +1,12 @@
 defmodule Cataract.Rtorrent do
   def bla do
-    url = "ipc:///home/niklas/rails/cataract/tmp/sockets/rtorrent_test"
+    url = '/home/niklas/rails/cataract/tmp/sockets/rtorrent_test'
 
-    :procket.socket(:unspec,:stream,0)
+    case :afunix.connect(url, []) do
+      {:ok, _socket} ->
+        IO.puts "connected"
+      {:error, error} ->
+        IO.puts error
+    end
   end
 end

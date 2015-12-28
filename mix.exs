@@ -36,7 +36,7 @@ defmodule Cataract.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
-     {:procket, github: "msantos/procket"},
+     {:afunix, github: "tonyrog/afunix"},
      {:cowboy, "~> 1.0"}]
   end
 
