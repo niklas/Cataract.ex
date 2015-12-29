@@ -45,8 +45,8 @@ defmodule Cataract.Rtorrent do
   end
 
   def parse(xml) do
-    xml
-    |> XMLRPC.decode
-    |> IO.puts
+    {:ok, %XMLRPC.MethodResponse{param: param} } = XMLRPC.decode(xml)
+    param
+    |> Enum.each(fn (e)-> IO.puts e end)
   end
 end
