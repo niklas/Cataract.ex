@@ -16,10 +16,16 @@ defmodule Cataract.Rtorrent do
     null = "\0"
     # TODO escape / use  XMLRPC
     payload = "<?xml version=\"1.0\" ?><methodCall><methodName>" <> cmd <> "</methodName><params/></methodCall>" <> "\n"
-    headers = "CONTENT_LENGTH" <> null <> (payload |> byte_size |> to_string) <> null <>
-        "SCGI" <> null <> "1" <> null <>
-        "REQUEST_METHOD" <> null <> "POST" <> null <>
-        "REQUEST_URI" <> null <> "/RPC2" <> null
+    h = %{
+      "CONTENT_LENGTH" => (payload |> byte_size |> to_string),
+      "SCGI"           => "1",
+      "REQUEST_METHOD" => "POST",
+      "REQUEST_URI"    => "/RPC2"
+    }
+    headers = Map.keys(h)
+      |> Enum.map(fn(k) -> k <> "\0" <> h[k] <> "\0" end)
+      |> Enum.join()
+
     (byte_size(headers) |> to_string) <> ":" <> headers <> "," <> payload
   end
 
@@ -46,6 +52,10 @@ defmodule Cataract.Rtorrent do
       Else ->
         IO.puts ".:"
     end
+  end
+
+  def parse(nil) do
+    IO.puts "empty response"
   end
 
   def parse(xml) do
