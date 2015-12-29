@@ -1,10 +1,10 @@
 defmodule Cataract.Rtorrent do
-  def call(cmd) do
+  def call(cmd, params \\ []) do
     url = '/home/niklas/rails/cataract/tmp/sockets/rtorrent_test'
 
     case :afunix.connect(url, []) do
       {:ok, socket} ->
-        data = build_req(cmd)
+        data = build_req(cmd, params)
         :ok = :afunix.send(socket, data)
         collect_response([])
       {:error, error} ->
@@ -12,10 +12,8 @@ defmodule Cataract.Rtorrent do
     end
   end
 
-  def build_req(cmd) do
-    null = "\0"
-    # TODO escape / use  XMLRPC
-    payload = "<?xml version=\"1.0\" ?><methodCall><methodName>" <> cmd <> "</methodName><params/></methodCall>" <> "\n"
+  def build_req(cmd, params \\ []) do
+    payload = %XMLRPC.MethodCall{method_name: cmd, params: params} |> XMLRPC.encode!
     h = %{
       "CONTENT_LENGTH" => (payload |> byte_size |> to_string),
       "SCGI"           => "1",
