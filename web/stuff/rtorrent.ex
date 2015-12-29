@@ -31,7 +31,7 @@ defmodule Cataract.Rtorrent do
         |> to_string
         |> String.split("\n\n")
         |> List.first
-        |> String.slice(0,100)
+        |> String.slice(0,200)
         |> IO.puts
         IO.puts "done."
         :ok = :afunix.close(socket)
