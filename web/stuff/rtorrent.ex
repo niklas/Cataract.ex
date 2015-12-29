@@ -20,10 +20,12 @@ defmodule Cataract.Rtorrent do
       "REQUEST_METHOD" => "POST",
       "REQUEST_URI"    => "/RPC2"
     }
+    # SCGI headers are delimited by NULL byte
     headers = Map.keys(h)
       |> Enum.map(fn(k) -> k <> "\0" <> h[k] <> "\0" end)
       |> Enum.join()
 
+    # netstring
     (byte_size(headers) |> to_string) <> ":" <> headers <> "," <> payload
   end
 
