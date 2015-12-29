@@ -25,7 +25,6 @@ defmodule Cataract.Rtorrent do
         IO.puts "response:"
         IO.puts resp
       {:error, err} ->
-        IO.puts "error"
         IO.puts err
     end
     :ok = :afunix.close(socket)
