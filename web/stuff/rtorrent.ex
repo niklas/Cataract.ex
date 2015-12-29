@@ -39,8 +39,7 @@ defmodule Cataract.Rtorrent do
       {:tcp_closed, socket} ->
         received
         |> to_string
-        |> String.split(~r{\r?\n\r?\n})
-        |> Enum.at(1)
+        |> String.replace(~r{\A.+?\r?\n\r?\n}s, "", global: false)
         |> parse
         IO.puts "done."
         :ok = :afunix.close(socket)
