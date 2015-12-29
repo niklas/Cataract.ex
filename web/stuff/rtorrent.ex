@@ -4,7 +4,6 @@ defmodule Cataract.Rtorrent do
 
     case :afunix.connect(url, []) do
       {:ok, socket} ->
-        IO.puts "connected"
         null = "\0"
         data = "64:" <>
         "CONTENT_LENGTH" <> null <> "100" <> null <>
@@ -22,7 +21,6 @@ defmodule Cataract.Rtorrent do
   def collect_response(received) do
     receive do
       {:tcp, _s, resp} ->
-        IO.puts "response"
         collect_response( [received, resp] )
       {:tcp_error, _s, err} ->
         IO.puts err
