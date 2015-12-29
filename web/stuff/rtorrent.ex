@@ -18,7 +18,7 @@ defmodule Cataract.Rtorrent do
     "SCGI" <> null <> "1" <> null <>
     "REQUEST_METHOD" <> null <> "POST" <> null <>
     "REQUEST_URI" <> null <> "/RPC2" <> null <>
-    ",<?xml version=\"1.0\" ?><methodCall><methodName>system.listMethods</methodName><params/></methodCall>"
+    ",<?xml version=\"1.0\" ?><methodCall><methodName>system.listMethods</methodName><params/></methodCall>" <> "\n"
     :ok = :afunix.send(socket, data)
     case :afunix.recv(socket, 10, 1000) do
       {:ok, resp} ->
