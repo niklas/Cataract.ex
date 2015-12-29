@@ -20,7 +20,7 @@ defmodule Cataract.Rtorrent do
     "REQUEST_URI" <> null <> "/RPC2" <> null <>
     ",<?xml version=\"1.0\" ?><methodCall><methodName>system.listMethods</methodName><params/></methodCall>" <> "\n"
     :ok = :afunix.send(socket, data)
-    case :afunix.recv(socket, 10, 1000) do
+    case :afunix.recv(socket, 1000, 1000) do
       {:ok, resp} ->
         IO.puts "response:"
         IO.puts resp
