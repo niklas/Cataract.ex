@@ -41,8 +41,6 @@ defmodule Cataract.Rtorrent do
         |> to_string
         |> String.replace(~r{\A.+?\r?\n\r?\n}s, "", global: false)
         |> parse
-        IO.puts "done."
-        :ok = :afunix.close(socket)
       {a,b,c} ->
         IO.puts "WTF:"
         IO.puts a
@@ -59,7 +57,6 @@ defmodule Cataract.Rtorrent do
 
   def parse(xml) do
     {:ok, %XMLRPC.MethodResponse{param: param} } = XMLRPC.decode(xml)
-    param
-    |> Enum.each(fn (e)-> IO.puts e end)
+    {:ok, param}
   end
 end
