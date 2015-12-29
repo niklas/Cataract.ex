@@ -5,7 +5,10 @@
 
 <div class="row marketing">
   <div class="col-lg-6">
-    <a href="/hello">Say "Hello"</a>
+    <ul>
+      <li> <a href="/hello">Say "Hello"</a> </li>
+      <li> <a href="/transfers">Transfers</a> </li>
+    </ul>
   </div>
 </div>
 <div class="row marketing">

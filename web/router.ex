@@ -19,6 +19,8 @@ defmodule Cataract.Router do
     get "/", PageController, :index
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
+
+    get "/transfers", TransferController, :index
   end
 
   # Other scopes may use custom stacks.
