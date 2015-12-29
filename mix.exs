@@ -37,6 +37,8 @@ defmodule Cataract.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},
+     {:erlsom, github: "willemdj/erlsom"},
+     {:xmlrpc, "~> 0.1"},
      {:cowboy, "~> 1.0"}]
   end
 

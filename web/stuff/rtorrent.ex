@@ -39,4 +39,10 @@ defmodule Cataract.Rtorrent do
         IO.puts ".:"
     end
   end
+
+  def parse(xml) do
+    xml
+    |> XMLRPC.decode
+    |> IO.puts
+  end
 end
