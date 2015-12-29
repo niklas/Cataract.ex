@@ -19,15 +19,20 @@ defmodule Cataract.Rtorrent do
     end
   end
 
-  def collect_response(xml) do
+  def collect_response(received) do
     receive do
       {:tcp, _s, resp} ->
         IO.puts "response"
-        collect_response( [xml, resp] )
+        collect_response( [received, resp] )
       {:tcp_error, _s, err} ->
         IO.puts err
       {:tcp_closed, socket} ->
-        IO.puts to_string(xml)
+        received
+        |> to_string
+        |> String.split("\n\n")
+        |> List.first
+        |> String.slice(0,100)
+        |> IO.puts
         IO.puts "done."
         :ok = :afunix.close(socket)
       {a,b,c} ->
