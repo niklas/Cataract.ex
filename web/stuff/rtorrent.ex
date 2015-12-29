@@ -1,22 +1,28 @@
 defmodule Cataract.Rtorrent do
-  def bla do
+  def call(cmd) do
     url = '/home/niklas/rails/cataract/tmp/sockets/rtorrent_test'
 
     case :afunix.connect(url, []) do
       {:ok, socket} ->
-        null = "\0"
-        data = "64:" <>
-        "CONTENT_LENGTH" <> null <> "100" <> null <>
-        "SCGI" <> null <> "1" <> null <>
-        "REQUEST_METHOD" <> null <> "POST" <> null <>
-        "REQUEST_URI" <> null <> "/RPC2" <> null <>
-        ",<?xml version=\"1.0\" ?><methodCall><methodName>system.listMethods</methodName><params/></methodCall>" <> "\n"
+        data = build_req(cmd)
         :ok = :afunix.send(socket, data)
         collect_response([])
       {:error, error} ->
         IO.puts error
     end
   end
+
+  def build_req(cmd) do
+    null = "\0"
+    # TODO escape / use  XMLRPC
+    payload = "<?xml version=\"1.0\" ?><methodCall><methodName>" <> cmd <> "</methodName><params/></methodCall>" <> "\n"
+    headers = "CONTENT_LENGTH" <> null <> (payload |> byte_size |> to_string) <> null <>
+        "SCGI" <> null <> "1" <> null <>
+        "REQUEST_METHOD" <> null <> "POST" <> null <>
+        "REQUEST_URI" <> null <> "/RPC2" <> null
+    (byte_size(headers) |> to_string) <> ":" <> headers <> "," <> payload
+  end
+
 
   def collect_response(received) do
     receive do
