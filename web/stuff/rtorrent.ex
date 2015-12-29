@@ -29,10 +29,9 @@ defmodule Cataract.Rtorrent do
       {:tcp_closed, socket} ->
         received
         |> to_string
-        |> String.split("\n\n")
-        |> List.first
-        |> String.slice(0,200)
-        |> IO.puts
+        |> String.split(~r{\r?\n\r?\n})
+        |> List.last
+        |> parse
         IO.puts "done."
         :ok = :afunix.close(socket)
       {a,b,c} ->
