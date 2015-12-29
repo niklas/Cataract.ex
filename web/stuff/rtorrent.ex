@@ -28,7 +28,7 @@ defmodule Cataract.Rtorrent do
         received
         |> to_string
         |> String.split(~r{\r?\n\r?\n})
-        |> List.last
+        |> Enum.at(1)
         |> parse
         IO.puts "done."
         :ok = :afunix.close(socket)
