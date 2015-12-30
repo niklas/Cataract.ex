@@ -2,7 +2,11 @@
 
 <ul>
   <%= for x <- @transfers do %>
-    <li><%= x %></li>
+    <li>
+      <span class="hash"><%= Enum.at x, 0 %></span>:
+      <span class="up_rate"><%= Enum.at x, 1 %></span>|
+      <span class="down_rate"><%= Enum.at x, 2 %></span>
+    </li>
   <% end %>
 </ul>
 
