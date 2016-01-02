@@ -25,8 +25,10 @@ defmodule Cataract.Rtorrent do
   end
 
   def build_transfer(fields, data) do
-    Enum.zip(fields,data)
-    |> Enum.into( %{} )
+    struct( Cataract.Transfer,
+      Enum.zip(fields,data)
+      |> Enum.into( %{} )
+    )
   end
 
   def build_req(cmd, params \\ []) do

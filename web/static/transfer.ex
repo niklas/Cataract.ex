@@ -1,5 +1,5 @@
 defmodule Cataract.Transfer do
   defstruct hash: nil,
-            up_date: nil,
-            down_date: nil
+            up_rate: nil,
+            down_rate: nil
 end
