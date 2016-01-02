@@ -18,4 +18,4 @@
   "postgrex": {:hex, :postgrex, "0.10.0"},
   "procket": {:git, "https://github.com/msantos/procket.git", "28d18658b3e9fe41aaeab3852dd0f5e108ab4838", []},
   "ranch": {:hex, :ranch, "1.2.0"},
-  "xmlrpc": {:hex, :xmlrpc, "0.9.1"}}
+  "xmlrpc": {:git, "https://github.com/niklas/elixir-xml_rpc.git", "952c30400ed1ab6a21aeea9e14f5f7ee892fa133", [branch: "feature/64-bit-integers"]}}
