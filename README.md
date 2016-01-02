@@ -17,6 +17,9 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * `mix deps.get`
   * `npm install`
 
+### For Development
+  * `apt-get install inotify-tools`
+
 ## Run it
 
   * `iex -S mix phoenix.server`
