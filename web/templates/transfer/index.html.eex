@@ -3,9 +3,9 @@
 <ul>
   <%= for x <- @transfers do %>
     <li>
-      <span class="hash"><%= Enum.at x, 0 %></span>:
-      <span class="up_rate"><%= Enum.at x, 1 %></span>|
-      <span class="down_rate"><%= Enum.at x, 2 %></span>
+      <span class="hash"><%= x.hash %></span>:
+      <span class="up_rate"><%= x.up_rate %></span>|
+      <span class="down_rate"><%= x.down_rate %></span>
     </li>
   <% end %>
 </ul>

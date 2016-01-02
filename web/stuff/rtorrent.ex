@@ -12,6 +12,23 @@ defmodule Cataract.Rtorrent do
     end
   end
 
+  def find_all(fields, view \\ "") do
+    remote_fields = fields
+                    |> Enum.map(&Atom.to_string/1)
+                    |> Enum.map(fn (f) -> "d.get_" <> f <> "=" end)
+
+    {:ok, trs } = Cataract.Rtorrent.call("d.multicall", List.insert_at(remote_fields, 0, view))
+    {:ok,
+    trs
+      |> Enum.map fn (tr) -> build_transfer(fields, tr) end
+    }
+  end
+
+  def build_transfer(fields, data) do
+    Enum.zip(fields,data)
+    |> Enum.into( %{} )
+  end
+
   def build_req(cmd, params \\ []) do
     payload = %XMLRPC.MethodCall{method_name: cmd, params: params} |> XMLRPC.encode!
     h = %{
