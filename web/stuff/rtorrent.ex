@@ -8,7 +8,7 @@ defmodule Cataract.Rtorrent do
         :ok = :afunix.send(socket, data)
         collect_response([])
       {:error, error} ->
-        IO.puts error
+        {:error, error} # FIXME unsure about how to handle "econnrefused"
     end
   end
 
@@ -17,11 +17,15 @@ defmodule Cataract.Rtorrent do
                     |> Enum.map(&Atom.to_string/1)
                     |> Enum.map(fn (f) -> "d.get_" <> f <> "=" end)
 
-    {:ok, trs } = Cataract.Rtorrent.call("d.multicall", List.insert_at(remote_fields, 0, view))
-    {:ok,
-    trs
-      |> Enum.map fn (tr) -> build_transfer(fields, tr) end
-    }
+    case Cataract.Rtorrent.call("d.multicall", List.insert_at(remote_fields, 0, view)) do
+      {:ok, trs} ->
+        {:ok,
+        trs
+          |> Enum.map fn (tr) -> build_transfer(fields, tr) end
+        }
+      {:error, error} ->
+        {:error, error} # FIXME where should I catch this, repeat or show message to user?
+    end
   end
 
   def build_transfer(fields, data) do
