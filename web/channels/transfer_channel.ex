@@ -30,7 +30,6 @@ defmodule Cataract.TransferChannel do
     {:noreply, socket}
   end
   def handle_info(:ping, socket) do
-    push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
     payload = %{ "transfers" => [
         %{ "hash" => "YYY", "up_rate" => :random.uniform(1000000), "down_rate" => :random.uniform(1000000)}
       ]}
