@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'cataract',
     environment: environment,
     baseURL: '/ember',
-    locationType: 'none',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
