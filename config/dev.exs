@@ -25,6 +25,7 @@ config :cataract, Cataract.Endpoint,
       ~r{priv/gettext/.*(po)$},
       ~r{web/views/.*(ex)$},
       ~r{web/stuff/.*(ex)$},
+      ~r{web/channels/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]
   ]
