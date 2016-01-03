@@ -6,4 +6,6 @@ export default PhoenixAdapter.extend({
   joinParams: function() {
     return { authToken: "verysecrettoken" };
   }.property("token"),
+
+  shouldReloadAll: function() { return true },
 });
