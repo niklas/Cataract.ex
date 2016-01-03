@@ -18,7 +18,7 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    SocketURI: '/socket/websocket'
+    SocketURI: '/socket'
   };
 
   if (environment === 'development') {

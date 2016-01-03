@@ -7,17 +7,26 @@ defmodule Cataract.TransferChannel do
     :timer.send_interval(5000, :ping)
     send(self, {:after_join, message})
 
-    {:ok, %{ "transfers" => [%{ "id" => 42, "hash" => "XXX", "up_rate" => 23 }] }, socket}
+    {:ok, socket}
   end
 
   def join("transfers:" <> _private_subtopic, _message, _socket) do
     {:error, %{reason: "unauthorized"}}
   end
 
+  def handle_in("all", _data, socket) do
+    payload = %{ "transfers" => [%{ "hash" => "XXX", "up_rate" => 23, "down_rate" => 42 }] }
+    {:reply, { :ok, payload }, socket}
+  end
+
+  # ignore incoming messages
+  def handle_in(_action, _data, socket) do
+    {:noreply, socket}
+  end
+
   def handle_info({:after_join, msg}, socket) do
     broadcast! socket, "user:entered", %{user: msg["user"]}
     push socket, "join", %{status: "connected"}
-    push( socket, "all", %{ "transfers" => [%{ "id" => 42, "hash" => "XXX", "up_rate" => 23 }] })
     {:noreply, socket}
   end
   def handle_info(:ping, socket) do
