@@ -32,14 +32,14 @@ defmodule Cataract.TransferChannel do
   def handle_info(:ping, socket) do
     push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
     payload = %{ "transfers" => [
-        %{ "hash" => "YYY", "up_rate" => :random.uniform(100), "down_rate" => :random.uniform(100)}
+        %{ "hash" => "YYY", "up_rate" => :random.uniform(1000000), "down_rate" => :random.uniform(1000000)}
       ]}
 
     push socket, "add", payload
     {:noreply, socket}
   end
 
-  def terminate(reason, _socket) do
+  def terminate(_event, reason) do
     Logger.debug"> leave #{inspect reason}"
     :ok
   end
