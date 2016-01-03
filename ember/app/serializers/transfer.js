@@ -1,10 +1,6 @@
-import PhoenixAdapter from "ember-phoenix-adapter";
+import DS from 'ember-data';
+import ApplicationSerializer from './application';
 
-export default PhoenixAdapter.extend({
-  primaryKey: 'hash',
-  addEvents: ["add", "create"],
-
-  joinParams: function() {
-    return { authToken: token };
-  }.property("token"),
+export default ApplicationSerializer.extend({
+  primaryKey: 'hash'
 });
