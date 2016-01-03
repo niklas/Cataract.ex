@@ -2,7 +2,7 @@ defmodule Cataract.TransferChannel do
   use Phoenix.Channel
   require Logger
 
-  def join("transfers:lobby", message, socket) do
+  def join("transfers:all", message, socket) do
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
     send(self, {:after_join, message})
