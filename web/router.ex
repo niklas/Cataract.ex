@@ -26,7 +26,8 @@ defmodule Cataract.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Cataract do
-  #   pipe_through :api
-  # end
+  scope "/api/1", Cataract do
+    pipe_through :api
+    get "/transfers", TransferController, :index
+  end
 end
