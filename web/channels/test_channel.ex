@@ -4,7 +4,7 @@ defmodule Cataract.TestChannel do
   def join("test:lobby", _message, socket) do
     Process.flag(:trap_exit, true)
     :timer.send_interval(5000, :ping)
-    {:ok, socket}
+    {:ok, %{message: "hello you"}, socket}
   end
 
   def join("test:" <> _private, _params, _socket) do
