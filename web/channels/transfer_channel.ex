@@ -4,7 +4,7 @@ defmodule Cataract.TransferChannel do
 
   def join("transfers:all", message, socket) do
     Process.flag(:trap_exit, true)
-    :timer.send_interval(5000, :ping)
+    :timer.send_interval(5000, :publish_all)
     send(self, {:after_join, message})
 
     {:ok, socket}
@@ -15,8 +15,7 @@ defmodule Cataract.TransferChannel do
   end
 
   def handle_in("all", _data, socket) do
-    payload = %{ "transfers" => [%{ "hash" => "XXX", "up_rate" => 23, "down_rate" => 42 }] }
-    {:reply, { :ok, payload }, socket}
+    {:reply, { :ok, all }, socket}
   end
 
   # ignore incoming messages
@@ -29,12 +28,8 @@ defmodule Cataract.TransferChannel do
     push socket, "join", %{status: "connected"}
     {:noreply, socket}
   end
-  def handle_info(:ping, socket) do
-    payload = %{ "transfers" => [
-        %{ "hash" => "YYY", "up_rate" => :random.uniform(1000000), "down_rate" => :random.uniform(1000000)}
-      ]}
-
-    push socket, "add", payload
+  def handle_info(:publish_all, socket) do
+    push socket, "add", all
     {:noreply, socket}
   end
 
@@ -46,5 +41,15 @@ defmodule Cataract.TransferChannel do
   def handle_in("new:msg", msg, socket) do
     broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
     {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
+  end
+
+  def all do
+    case Cataract.Rtorrent.find_all([:hash, :up_rate, :down_rate]) do
+      {:ok, transfers } ->
+        %{ transfers: transfers }
+      {:error, reason} ->
+        Logger.error "cannot fetch transfers: " <> to_string(reason)
+        %{}
+    end
   end
 end
