@@ -28,6 +28,7 @@ defmodule Cataract.TransferChannel do
     push socket, "join", %{status: "connected"}
     {:noreply, socket}
   end
+
   def handle_info(:publish_all, socket) do
     push socket, "add", all
     {:noreply, socket}
@@ -36,11 +37,6 @@ defmodule Cataract.TransferChannel do
   def terminate(_event, reason) do
     Logger.debug"> leave #{inspect reason}"
     :ok
-  end
-
-  def handle_in("new:msg", msg, socket) do
-    broadcast! socket, "new:msg", %{user: msg["user"], body: msg["body"]}
-    {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
   end
 
   def all do
