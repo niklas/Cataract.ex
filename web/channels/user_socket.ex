@@ -3,6 +3,9 @@ defmodule Cataract.UserSocket do
 
   ## Channels
   # channel "rooms:*", Cataract.RoomChannel
+  channel "transfers:*", Cataract.TransferChannel
+
+  channel "test:*", Cataract.TestChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

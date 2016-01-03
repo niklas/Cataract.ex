@@ -21,10 +21,13 @@ defmodule Cataract.Router do
     get "/hello/:messenger", HelloController, :show
 
     get "/transfers", TransferController, :index
+
+    get "/ember", EmberController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Cataract do
-  #   pipe_through :api
-  # end
+  scope "/api/1", Cataract do
+    pipe_through :api
+    get "/transfers", TransferController, :index
+  end
 end

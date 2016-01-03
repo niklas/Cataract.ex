@@ -10,3 +10,7 @@
   <% end %>
 </ul>
 
+<p>
+  see a <a href="/ember">live view here</a> (TODO avoid index.html)
+</p>
+

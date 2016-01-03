@@ -22,3 +22,21 @@ erl_crash.dump
 # secrets file as long as you replace its contents by environment
 # variables.
 /config/prod.secret.exs
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/ember/dist
+/ember/tmp
+
+# dependencies
+/ember/node_modules
+/ember/bower_components
+
+# misc
+/ember/.sass-cache
+/ember/connect.lock
+/ember/coverage/*
+/ember/libpeerconnection.log
+npm-debug.log
+testem.log
+web/static/assets/ember/
