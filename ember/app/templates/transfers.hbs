@@ -2,6 +2,11 @@
 
 <ul>
   {{#each content as |transfer|}}
-  <li>{{transfer.id}}: {{transfer.upRate}}|{{transfer.downRate}}</li>
+  <li>
+    <h4>{{transfer.id}}</h4>
+    <span>{{transfer.upRate}}|{{transfer.downRate}}</span>
+    <span>{{transfer.completedBytes}}/{{transfer.sizeBytes}}</span>
+    <p>{{transfer.ratio}}</p>
+  </li>
   {{/each}}
 </ul>

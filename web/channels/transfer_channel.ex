@@ -4,7 +4,7 @@ defmodule Cataract.TransferChannel do
 
   def join("transfers:all", message, socket) do
     Process.flag(:trap_exit, true)
-    :timer.send_interval(5000, :publish_all)
+    :timer.send_interval(1000, :publish_all)
     send(self, {:after_join, message})
 
     {:ok, socket}
@@ -40,7 +40,7 @@ defmodule Cataract.TransferChannel do
   end
 
   def all do
-    case Cataract.Rtorrent.find_all([:hash, :up_rate, :down_rate]) do
+    case Cataract.Rtorrent.find_all() do
       {:ok, transfers } ->
         %{ transfers: transfers }
       {:error, reason} ->

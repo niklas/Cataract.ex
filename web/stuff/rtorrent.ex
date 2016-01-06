@@ -12,7 +12,7 @@ defmodule Cataract.Rtorrent do
     end
   end
 
-  def find_all(fields, view \\ "") do
+  def find_all(fields \\ Cataract.Transfer.all_fields, view \\ "") do
     remote_fields = fields
                     |> Enum.map(&Atom.to_string/1)
                     |> Enum.map(fn (f) -> "d.get_" <> f <> "=" end)
