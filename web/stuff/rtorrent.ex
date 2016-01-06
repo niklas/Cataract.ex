@@ -28,6 +28,11 @@ defmodule Cataract.Rtorrent do
     end
   end
 
+  def remote_methods do
+    {:ok, methods} = call("system.listMethods")
+    methods
+  end
+
   def build_transfer(fields, data) do
     struct( Cataract.Transfer,
       Enum.zip(fields,data)
