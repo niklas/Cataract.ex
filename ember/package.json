@@ -37,5 +37,10 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
     "ember-phoenix-adapter": "git+https://github.com/niklas/ember-phoenix-adapter.git#update-2016"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/rsync-build-to-phoenix"
+    ]
   }
 }
