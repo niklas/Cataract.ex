@@ -15,5 +15,8 @@
 
   <body>
     <%= render @view_module, @view_template, assigns %>
+
+    <script defer src="<%= static_path(@conn, "/ember/assets/vendor.js") %>"></script>
+    <script defer src="<%= static_path(@conn, "/ember/assets/cataract.js") %>"></script>
   </body>
 </html>
