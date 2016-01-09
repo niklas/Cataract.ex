@@ -1,6 +1,12 @@
 @import "bourbon";
+@import "foundation_settings";
+@import "foundation";
 
 body {
   background: #706767;
   color: #aaaaaa;
+}
+
+#header {
+    @include grid-block;
 }
