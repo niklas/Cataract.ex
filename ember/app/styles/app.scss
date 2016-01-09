@@ -32,11 +32,24 @@
             );
 
             li {
-                @include clearfix;
+                @include grid-block;
+                @include block-list-item;
+                padding-top: $block-list-padding;
+                padding-bottom: $block-list-padding;
+            }
+
+            .title {
+                @include subheader();
+                @include grid-content;
+                word-break: break-word;
+            }
+
+            // TODO better word for container holding diverse information (transfer, buttons?)
+            .info {
+                @include grid-content;
             }
 
             .transfer {
-                float: right;
                 min-width: 10em;
                 max-width: 15em;
                 border-color: $color4;
@@ -63,6 +76,8 @@
                     }
                 }
                 .progress {
+                    @include grid-content;
+                    padding: 0;
                     @include border-style(solid null null null);
                     border-top-color: $color4;
                     .progress-meter {

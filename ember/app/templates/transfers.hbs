@@ -4,14 +4,16 @@
     <ul>
       {{#each content as |transfer|}}
       <li>
-        <h4 class="subheader"><small>{{transfer.id}}</small></h4>
+        <h4 class="title"><small>{{transfer.id}}</small></h4>
 
-        <div class="transfer">
-            <div class="rates">
-                <span class="up-rate">{{transfer.upRate}}</span>
-                <span class="down-rate">{{transfer.downRate}}</span>
+        <div class="info">
+            <div class="transfer">
+                <div class="rates">
+                    <span class="up-rate">{{transfer.upRate}}</span>
+                    <span class="down-rate">{{transfer.downRate}}</span>
+                </div>
+                {{progress-bar value=transfer.completedBytes maximum=transfer.sizeBytes}}
             </div>
-            {{progress-bar value=transfer.completedBytes maximum=transfer.sizeBytes}}
         </div>
       </li>
       {{/each}}
