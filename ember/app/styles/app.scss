@@ -33,6 +33,7 @@
 
             li {
                 @include grid-block;
+                @include grid-wrap(true);
                 @include block-list-item;
                 padding-top: $block-list-padding;
                 padding-bottom: $block-list-padding;
@@ -46,7 +47,8 @@
 
             // TODO better word for container holding diverse information (transfer, buttons?)
             .info {
-                @include grid-content;
+                // the box should grow with its content
+                @include grid-content($size: shrink);
             }
 
             .transfer {
