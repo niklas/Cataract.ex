@@ -5,9 +5,16 @@
       {{#each content as |transfer|}}
       <li>
         <h4 class="subheader"><small>{{transfer.id}}</small></h4>
-        <span>{{transfer.upRate}}|{{transfer.downRate}}</span>
-        <span>{{transfer.completedBytes}}/{{transfer.sizeBytes}}</span>
-        <p>{{transfer.ratio}}</p>
+
+        <div class="transfer">
+            <div class="rates">
+                <span class="up-rate">{{transfer.upRate}}</span>
+                <span class="down-rate">{{transfer.downRate}}</span>
+            </div>
+            <div class="progress">
+                <span class="bar-label"> {{transfer.percentCompleted}}% </span>
+            </div>
+        </div>
       </li>
       {{/each}}
     </ul>

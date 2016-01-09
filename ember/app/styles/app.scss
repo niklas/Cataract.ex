@@ -28,6 +28,37 @@
             @include block-list-container(
               $full-bleed: false
             );
+
+            .transfer {
+                max-width: 10em;
+                border-color: $color4;
+                border-style: solid;
+                @include border-top-radius(5px);
+                @include border-bottom-radius(10px);
+                .rates {
+                    @include clearfix;
+                    .up-rate, .down-rate {
+                        width: 50%;
+                        text-align: center;
+                    }
+                    .up-rate {
+                        float: left;
+                        @include border-style(null solid null null);
+                        border-right-color: $color5;
+                        border-right-width: $transfer-rates-indicator-width;
+                    }
+                    .down-rate {
+                        float: right;
+                        @include border-style(null null null solid);
+                        border-left-color: $color3;
+                        border-left-width: $transfer-rates-indicator-width;
+                    }
+                }
+                .progress {
+                    .label {
+                    }
+                }
+            }
         }
     }
 }
