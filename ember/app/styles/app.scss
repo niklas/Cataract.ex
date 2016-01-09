@@ -82,10 +82,16 @@
                     padding: 0;
                     @include border-style(solid null null null);
                     border-top-color: $color4;
+                    position: relative;
                     .progress-meter {
                         background: $color2;
-                        text-align: center;
                         transition: width 0.8s;
+                    }
+                    .progress-label {
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        text-align: center;
                     }
                 }
             }
