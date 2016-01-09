@@ -2,11 +2,14 @@
 @import "foundation_settings";
 @import "foundation";
 
-body {
-  background: #706767;
-  color: #aaaaaa;
-}
+#frame {
+    @include grid-frame($orientation: vertical);
 
-#header {
-    @include grid-block;
+    #header {
+        @include grid-block;
+    }
+
+    #body {
+        @include grid-content;
+    }
 }
