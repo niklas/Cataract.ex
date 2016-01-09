@@ -20,6 +20,10 @@ export default Ember.Component.extend({
         return new Ember.Handlebars.SafeString("width: " + this.get('percentCompleted') + "%")
     }.property('percentCompleted'),
 
+    detail: function() {
+        return "" + this.get('value') + " / " + this.get('maximum')
+    }.property('maximum', 'value'),
+
     percentCompleted: function() {
         return (100 * ( this.get('value') / this.get('maximum') )).toFixed(2)
     }.property('maximum', 'value'),
