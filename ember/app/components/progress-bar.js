@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     value: 0,
 
     meterStyle: function() {
-        return "width: " + this.get('percentCompleted') + "%"
+        return new Ember.Handlebars.SafeString("width: " + this.get('percentCompleted') + "%")
     }.property('percentCompleted'),
 
     percentCompleted: function() {
