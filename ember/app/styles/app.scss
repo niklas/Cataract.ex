@@ -55,7 +55,10 @@
                     }
                 }
                 .progress {
-                    .label {
+                    @include border-style(solid null null null);
+                    border-top-color: $color4;
+                    .progress-meter {
+                        background: $color2;
                     }
                 }
             }

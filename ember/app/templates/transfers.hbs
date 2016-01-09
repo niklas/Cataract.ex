@@ -11,9 +11,7 @@
                 <span class="up-rate">{{transfer.upRate}}</span>
                 <span class="down-rate">{{transfer.downRate}}</span>
             </div>
-            <div class="progress">
-                <span class="bar-label"> {{transfer.percentCompleted}}% </span>
-            </div>
+            {{progress-bar value=transfer.completedBytes maximum=transfer.sizeBytes}}
         </div>
       </li>
       {{/each}}

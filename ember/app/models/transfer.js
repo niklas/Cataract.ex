@@ -6,8 +6,4 @@ export default DS.Model.extend({
   ratio: DS.attr('number'),
   upRate: DS.attr('number'),
   downRate: DS.attr('number'),
-
-  percentCompleted: function() {
-      return 100 * ( this.get('completedBytes') / this.get('sizeBytes') )
-  }.property('sizeBytes', 'completedBytes'),
 });
