@@ -1,12 +1,14 @@
 {{outlet}}
 
-<ul>
-  {{#each content as |transfer|}}
-  <li>
-    <h4>{{transfer.id}}</h4>
-    <span>{{transfer.upRate}}|{{transfer.downRate}}</span>
-    <span>{{transfer.completedBytes}}/{{transfer.sizeBytes}}</span>
-    <p>{{transfer.ratio}}</p>
-  </li>
-  {{/each}}
-</ul>
+<section id="transfers">
+    <ul>
+      {{#each content as |transfer|}}
+      <li>
+        <h4 class="subheader"><small>{{transfer.id}}</small></h4>
+        <span>{{transfer.upRate}}|{{transfer.downRate}}</span>
+        <span>{{transfer.completedBytes}}/{{transfer.sizeBytes}}</span>
+        <p>{{transfer.ratio}}</p>
+      </li>
+      {{/each}}
+    </ul>
+</section>

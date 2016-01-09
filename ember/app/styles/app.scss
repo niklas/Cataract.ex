@@ -23,5 +23,11 @@
 
     #body {
         @include grid-content;
+
+        #transfers {
+            @include block-list-container(
+              $full-bleed: false
+            );
+        }
     }
 }
