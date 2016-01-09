@@ -29,8 +29,14 @@
               $full-bleed: false
             );
 
+            li {
+                @include clearfix;
+            }
+
             .transfer {
-                max-width: 10em;
+                float: right;
+                min-width: 10em;
+                max-width: 15em;
                 border-color: $color4;
                 border-style: solid;
                 @include border-top-radius(5px);
