@@ -7,7 +7,9 @@
     @include grid-frame($orientation: vertical);
 
     #header {
-        @include grid-content;
+        @include grid-content(
+            $size: shrink
+        );
 
         ul#menu {
             @extend %menu-bar;
