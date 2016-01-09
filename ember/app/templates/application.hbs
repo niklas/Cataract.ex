@@ -1,5 +1,12 @@
-<h2 id="title">Welcome to Cataract on Ember</h2>
+<div id="frame">
+    <div id="header">
+        <ul id="menu">
+            <li> {{#link-to 'application'}}Home{{/link-to}} </li>
+            <li> {{#link-to 'transfers'}}Transfers{{/link-to}} </li>
+        </ul>
+    </div>
 
-{{#link-to 'transfers'}}Transfers{{/link-to}}
-
-{{outlet}}
+    <div id="body">
+        {{outlet}}
+    </div>
+</div>

@@ -1,0 +1,100 @@
+@import "color_scheme";
+@import "bourbon";
+@import "foundation_settings";
+@import "foundation";
+
+#frame {
+    @include grid-frame($orientation: vertical);
+
+    #header {
+        @include grid-content(
+            $size: shrink
+        );
+
+        ul#menu {
+            @extend %menu-bar;
+            @include menu-bar-layout(
+                $orientation: horizontal
+            );
+            @include menu-bar-style(
+                $background: $color1,
+                $autocolor: true
+            )
+        }
+    }
+
+    #body {
+        @include grid-content;
+
+        #transfers {
+            @include block-list-container(
+              $full-bleed: false
+            );
+
+            li {
+                @include grid-block;
+                @include grid-wrap(true);
+                @include block-list-item;
+                padding-top: $block-list-padding;
+                padding-bottom: $block-list-padding;
+            }
+
+            .title {
+                @include subheader();
+                @include grid-content;
+                word-break: break-word;
+            }
+
+            // TODO better word for container holding diverse information (transfer, buttons?)
+            .info {
+                // the box should grow with its content
+                @include grid-content($size: shrink);
+            }
+
+            .transfer {
+                min-width: 10em;
+                max-width: 15em;
+                border-color: $color4;
+                border-style: solid;
+                @include border-top-radius(5px);
+                @include border-bottom-radius(10px);
+                .rates {
+                    @include clearfix;
+                    .up-rate, .down-rate {
+                        width: 50%;
+                        text-align: center;
+                    }
+                    .up-rate {
+                        float: left;
+                        @include border-style(null solid null null);
+                        border-right-color: $color5;
+                        border-right-width: $transfer-rates-indicator-width;
+                    }
+                    .down-rate {
+                        float: right;
+                        @include border-style(null null null solid);
+                        border-left-color: $color3;
+                        border-left-width: $transfer-rates-indicator-width;
+                    }
+                }
+                .progress {
+                    @include grid-content;
+                    padding: 0;
+                    @include border-style(solid null null null);
+                    border-top-color: $color4;
+                    position: relative;
+                    .progress-meter {
+                        background: $color2;
+                        transition: width 0.8s;
+                    }
+                    .progress-label {
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -5,5 +5,5 @@ export default DS.Model.extend({
   completedBytes: DS.attr('number'),
   ratio: DS.attr('number'),
   upRate: DS.attr('number'),
-  downRate: DS.attr('number')
+  downRate: DS.attr('number'),
 });
