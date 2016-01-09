@@ -1,3 +1,4 @@
+@import "color_scheme";
 @import "bourbon";
 @import "foundation_settings";
 @import "foundation";
@@ -6,7 +7,18 @@
     @include grid-frame($orientation: vertical);
 
     #header {
-        @include grid-block;
+        @include grid-content;
+
+        ul#menu {
+            @extend %menu-bar;
+            @include menu-bar-layout(
+                $orientation: horizontal
+            );
+            @include menu-bar-style(
+                $background: $color1,
+                $autocolor: true
+            )
+        }
     }
 
     #body {
