@@ -19,7 +19,8 @@ defmodule Cataract.Mixfile do
   def application do
     [mod: {Cataract, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex,
+                    :afunix, :xmlrpc, :erlsom]]
   end
 
   # Specifies which paths to compile per environment.
