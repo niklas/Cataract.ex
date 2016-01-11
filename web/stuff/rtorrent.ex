@@ -21,7 +21,7 @@ defmodule Cataract.Rtorrent do
       {:ok, trs} ->
         {:ok,
         trs
-          |> Enum.map fn (tr) -> build_transfer(fields, tr) end
+          |> Enum.map(fn (tr) -> build_transfer(fields, tr) end)
         }
       {:error, error} ->
         {:error, error} # FIXME where should I catch this, repeat or show message to user?
