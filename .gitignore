@@ -44,3 +44,4 @@ testem.log
 # access to ember configuration
 web/templates/ember/index.html.eex
 rel/
+.vagrant/

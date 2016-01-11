@@ -27,13 +27,7 @@ if ! hash erl 2>/dev/null; then
 fi
 
 if ! hash elixir 2>/dev/null; then
-  apt-get install -y make
-
-  cd /tmp
-  rm -r elixir-stable
-  wget -q -O - https://github.com/elixir-lang/elixir/archive/stable.tar.gz | tar xzv
-  cd elixir-stable
-  make && make install
+  apt-get install -y elixir
 fi
 
 EOP
