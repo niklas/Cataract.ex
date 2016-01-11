@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+shared_folder = "/home/vagrant/PhoenixApp"
+
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -13,9 +15,15 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.101.100"
 
   config.vm.provision :shell, :inline => PROVISION
+
+  config.vm.synced_folder "./", shared_folder
 end
 
 PROVISION = <<EOP
+update-locale LC_ALL=en_US.utf8
+update-locale LANG=en_US.utf8
+
+mkdir -p #{shared_folder}
 
 if ! hash erl 2>/dev/null; then
   cd /tmp/
@@ -28,6 +36,10 @@ fi
 
 if ! hash elixir 2>/dev/null; then
   apt-get install -y elixir
+fi
+
+if ! hash git 2>/dev/null; then
+  apt-get install -y git-core
 fi
 
 EOP
