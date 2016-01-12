@@ -7,7 +7,7 @@ export PORT=4042
 export RTORRENT_SOCKET=/media/shared/rtorrent/socket
 export MIX_ENV=prod
 
-cp ~/config/prod.secret.exs config/prod.secret.exs
+ln -sf ~/config/prod.secret.exs config/prod.secret.exs
 
 ########################################
 # Build Ember App
