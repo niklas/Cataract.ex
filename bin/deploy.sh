@@ -14,10 +14,10 @@ cp ~/config/prod.secret.exs config/prod.secret.exs
 ########################################
 cd ember
 
-if ! hash ember 2>/dev/null; then
-  npm install ember-cli
-  ember build --environment="production"
-fi
+ember="node_modules/ember-cli/bin/ember"
+
+npm install
+$ember build --environment="production"
 
 cd -
 
