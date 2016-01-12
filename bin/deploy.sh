@@ -32,6 +32,6 @@ cd -
 mix hex.info
 mix deps.get
 mix compile --force
-brunch build --production
+# brunch build --production
 # mix ecto.migrate
 mix phoenix.digest
