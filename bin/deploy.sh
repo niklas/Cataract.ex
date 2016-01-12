@@ -16,6 +16,7 @@ cd ember
 
 if ! hash ember 2>/dev/null; then
   npm install ember-cli
+  ember build --environment="production"
 fi
 
 cd -
@@ -28,4 +29,6 @@ cd -
 mix hex.info
 mix deps.get
 mix compile --force
+brunch build --production
+# mix ecto.migrate
 mix phoenix.digest
