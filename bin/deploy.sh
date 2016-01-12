@@ -15,8 +15,11 @@ ln -sf ~/config/prod.secret.exs config/prod.secret.exs
 cd ember
 
 ember="node_modules/ember-cli/bin/ember"
+bower="node_modules/bower/bin/bower"
 
 npm install
+[ -x $bower ] || npm install bower
+$bower install
 $ember build --environment="production"
 
 cd -
