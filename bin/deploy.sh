@@ -9,6 +9,20 @@ export MIX_ENV=prod
 
 cp ~/config/prod.secret.exs config/prod.secret.exs
 
+########################################
+# Build Ember App
+########################################
+cd ember
+
+if ! hash ember 2>/dev/null; then
+  npm install ember-cli
+fi
+
+cd -
+
+########################################
+# Build Phoenix App
+########################################
 [ -e ~/.mix/archives/hex-*.ez ] || mix local.hex --force
 [ -e ~/.mix/rebar ]             || mix local.rebar --force
 mix hex.info
