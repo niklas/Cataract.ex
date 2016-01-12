@@ -20,7 +20,7 @@ bower="node_modules/bower/bin/bower"
 npm install
 [ -x $bower ] || npm install bower
 $bower install
-$ember build --environment="production"
+$ember build
 
 cd -
 
