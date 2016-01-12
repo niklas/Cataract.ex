@@ -1,6 +1,6 @@
 defmodule Cataract.Rtorrent do
   def call(cmd, params \\ []) do
-    url = System.get_env("RTORRENT_SOCKET") || '/home/niklas/rails/cataract/tmp/sockets/rtorrent_test'
+    url = String.to_char_list(System.get_env("RTORRENT_SOCKET") || "/home/niklas/rails/cataract/tmp/sockets/rtorrent_test")
 
     case :afunix.connect(url, []) do
       {:ok, socket} ->
