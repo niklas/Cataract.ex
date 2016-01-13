@@ -1,0 +1,21 @@
+{{outlet}}
+
+<section id="transfers">
+    <ul>
+      {{#each content as |transfer|}}
+      <li>
+        <h4 class="title"><small>{{transfer.id}}</small></h4>
+
+        <div class="info">
+            <div class="transfer">
+                <div class="rates">
+                    <span class="up-rate">{{transfer.upRate}}</span>
+                    <span class="down-rate">{{transfer.downRate}}</span>
+                </div>
+                {{progress-bar value=transfer.completedBytes maximum=transfer.sizeBytes}}
+            </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+</section>
