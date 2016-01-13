@@ -3,7 +3,7 @@ defmodule Cataract.Mixfile do
 
   def project do
     [app: :cataract,
-     version: "0.0.1",
+     version: "0.3.0",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -19,7 +19,8 @@ defmodule Cataract.Mixfile do
   def application do
     [mod: {Cataract, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex,
+                    :afunix, :xmlrpc, :erlsom]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,6 +40,7 @@ defmodule Cataract.Mixfile do
      {:afunix, github: "tonyrog/afunix"},
      {:erlsom, github: "willemdj/erlsom"},
      {:xmlrpc, github: "niklas/elixir-xml_rpc", branch: "feature/64-bit-integers"},
+     {:exrm, "~> 0.19.9"},
      {:cowboy, "~> 1.0"}]
   end
 

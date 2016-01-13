@@ -12,7 +12,7 @@ defmodule Cataract.TestChannel do
   end
 
   def handle_info(:ping, socket) do
-    {{year, month, day}, {hour, minute, second}} = :calendar.local_time()
+    {{_year, _month, _day}, {hour, minute, second}} = :calendar.local_time()
     push socket, "ping", %{user: "SYSTEM", body: "#{hour}:#{minute}:#{second}"}
     {:noreply, socket}
   end
