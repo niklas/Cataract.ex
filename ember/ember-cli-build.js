@@ -9,6 +9,9 @@ module.exports = function(defaults) {
       includePaths: [
         'bower_components/foundation-apps/scss'
       ]
+    },
+    fingerprint: {
+      enabled: false // phoenix does the digest for us
     }
   });
 
