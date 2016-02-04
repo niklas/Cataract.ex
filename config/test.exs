@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :cataract, Cataract.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "cataract_test",
+  username: "cataract",
+  password: "cataract",
+  database: "cataract_elixir_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
