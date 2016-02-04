@@ -4,7 +4,7 @@ defmodule Cataract.FileServer do
   ### Public API
 
   def start_link(root) do
-    {:ok, pid} = :gen_server.start_link(__MODULE__, [], [])
+    {:ok, pid} = :gen_server.start_link(__MODULE__, root, [])
     pid
   end
 
@@ -15,6 +15,7 @@ defmodule Cataract.FileServer do
   ### Genserver API
   def init(root) do
     db = "/tmp/cataract-fileserver.db"
+    root = Path.absname(root)
     System.cmd "updatedb", [
       "--database-root", root,
       "--output", db,
@@ -23,7 +24,7 @@ defmodule Cataract.FileServer do
     {:ok, %{root: root, db: db}}
   end
 
-  def handle_call({:find_file, filename}, _from, status=%{db: db}) do
+  def handle_call({:find_file, filename}, _from, status=%{db: db, root: root}) do
     case System.cmd "locate", [
       "--database", db,
       "--basename",
@@ -31,8 +32,11 @@ defmodule Cataract.FileServer do
       filename <> "$"
     ] do
       { out, 0 } ->
+        cut_until = String.length(root) - 1
         paths = out
         |> String.split("\n")
+        |> Enum.reject( fn (line) -> line == "" end)
+        |> Enum.map( fn (abs) -> String.slice(abs, cut_until..-1) end)
         {:reply, paths, status}
       { _, 1 } ->
         {:reply, :not_found, status}
