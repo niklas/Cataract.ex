@@ -1,15 +1,29 @@
 defmodule Cataract.FileServer do
+  use GenServer
+
+  ### Public API
+
   def start_link(root) do
+    {:ok, pid} = :gen_server.start_link(__MODULE__, [], [])
+    pid
+  end
+
+  def find_file(server, filename) do
+    :gen_server.call server, {:find_file, filename}
+  end
+
+  ### Genserver API
+  def init(root) do
     db = "/tmp/cataract-fileserver.db"
     System.cmd "updatedb", [
       "--database-root", root,
       "--output", db,
       "--require-visibility", "no"
     ]
+    {:ok, %{root: root, db: db}}
   end
 
-  def find_file(filename) do
-    db = "/tmp/cataract-fileserver.db"
+  def handle_call({:find_file, filename}, _from, status=%{db: db}) do
     case System.cmd "locate", [
       "--database", db,
       "--basename",
@@ -17,9 +31,11 @@ defmodule Cataract.FileServer do
       filename <> "$"
     ] do
       { out, 0 } ->
-        String.split(out, "\n")
+        paths = out
+        |> String.split("\n")
+        {:reply, paths, status}
       { _, 1 } ->
-        :nothing_found
+        {:reply, :not_found, status}
     end
   end
 end
