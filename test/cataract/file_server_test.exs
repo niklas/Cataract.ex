@@ -1,10 +1,19 @@
 defmodule Cataract.FileServerTest do
   use ExUnit.Case
 
-  test "finding an existing file by exact name" do
-    server = Cataract.FileServer.start_link("./")
+  alias Cataract.FileServer
 
-    assert Cataract.FileServer.find_file(server, "file_server_test.exs") == ["test/cataract/file_server_test.exs"]
+  setup do
+    server = FileServer.start_link("./")
+    {:ok, [server: server]}
+  end
+
+  test "finds an existing file by exact name", %{server: server} do
+    assert FileServer.find_file(server, "file_server_test.exs") == ["test/cataract/file_server_test.exs"]
+  end
+
+  test "does not find a nonexisting file by exact name", %{server: server} do
+    assert FileServer.find_file(server, "CodeOfConduct.doc") == :not_found
   end
 
 end
