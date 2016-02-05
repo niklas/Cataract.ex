@@ -18,10 +18,27 @@ defmodule Cataract.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Cataract, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex,
-                    :afunix, :xmlrpc, :erlsom]]
+     applications: app_list(Mix.env)
+     ]
   end
+
+  def app_list do
+    [
+      :phoenix,
+      :phoenix_html,
+      :cowboy,
+      :logger,
+      :gettext,
+      :phoenix_ecto,
+      :postgrex,
+      :afunix,
+      :xmlrpc,
+      :erlsom,
+    ]
+  end
+
+  def app_list(:test), do: [:hound | app_list]
+  def app_list(_),     do: app_list
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -37,6 +54,7 @@ defmodule Cataract.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
+     {:hound, "~> 0.7", only: :test},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},
      {:erlsom, github: "willemdj/erlsom"},
