@@ -7,6 +7,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('transfers');
+  this.route('library');
 });
 
 export default Router;

@@ -7,8 +7,10 @@ defmodule Cataract.SetupLibraryTest do
   # Start a Hound session
   hound_session
 
-  test "GET /" do
-    navigate_to "/"
-    assert page_source =~ "Welcome to Phoenix"
+  test "setup disks, finds torrents" do
+    navigate_to "/ember"
+    click({:link_text, "Library"})
+    assert visible_in_page?(~r/Disks/)
+    # TODO: click "Setup"
   end
 end
