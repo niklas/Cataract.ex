@@ -54,7 +54,7 @@ defmodule Cataract.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
-     {:hound, "~> 0.7", only: :test},
+     {:hound, "~> 0.8.2"},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},
      {:erlsom, github: "willemdj/erlsom"},
