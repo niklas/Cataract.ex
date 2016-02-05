@@ -18,8 +18,8 @@ defmodule Cataract.FileServer do
 
   ### Genserver API
   def init(root) do
-    db = "/tmp/cataract-fileserver.db"
     root = Path.absname(root)
+    db = "/tmp/" <> Base.encode16(:erlang.md5(root), case: :lower)
     System.cmd "updatedb", [
       "--database-root", root,
       "--output", db,
