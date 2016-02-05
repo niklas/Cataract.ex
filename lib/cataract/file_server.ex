@@ -32,11 +32,10 @@ defmodule Cataract.FileServer do
       filename <> "$"
     ] do
       { out, 0 } ->
-        cut_until = String.length(root) - 1
         paths = out
         |> String.split("\n")
         |> Enum.reject( fn (line) -> line == "" end)
-        |> Enum.map( fn (abs) -> String.slice(abs, cut_until..-1) end)
+        |> Enum.map( fn (abs) -> Path.relative_to(abs, root) end)
         {:reply, paths, status}
       { _, 1 } ->
         {:reply, :not_found, status}
