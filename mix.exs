@@ -36,6 +36,7 @@ defmodule Cataract.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:mix_test_watch, "~> 0.2", only: :dev},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},
      {:erlsom, github: "willemdj/erlsom"},
