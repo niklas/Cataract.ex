@@ -9,7 +9,11 @@ defmodule Cataract.FileServer do
   end
 
   def find_file(server, filename) do
-    :gen_server.call server, {:find_file, filename}
+    :gen_server.call server, {:find_file, filename <> "$"}
+  end
+
+  def find_file_with_extension(server, extension) do
+    :gen_server.call server, {:find_file, "\." <> extension <> "$"}
   end
 
   ### Genserver API
@@ -24,12 +28,12 @@ defmodule Cataract.FileServer do
     {:ok, %{root: root, db: db}}
   end
 
-  def handle_call({:find_file, filename}, _from, status=%{db: db, root: root}) do
+  def handle_call({:find_file, pattern}, _from, status=%{db: db, root: root}) do
     case System.cmd "locate", [
       "--database", db,
       "--basename",
       "--regexp",
-      filename <> "$"
+      pattern
     ] do
       { out, 0 } ->
         paths = out
