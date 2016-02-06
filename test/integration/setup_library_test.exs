@@ -8,7 +8,14 @@ defmodule Cataract.SetupLibraryTest do
   hound_session
 
   test "setup disks, finds torrents" do
+    fs_src  = Path.absname("./") <> "/test/fixtures/fs"
     fs_root = Path.absname("./") <> "/tmp/test_fs"
+
+    { _, 0 } = System.cmd "rsync", [
+      "-a", "--delete",
+      fs_src <> "/",
+      fs_root <> "/",
+    ]
 
     navigate_to "/ember"
     click({:link_text, "Library"})
