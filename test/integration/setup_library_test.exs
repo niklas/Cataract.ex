@@ -22,9 +22,9 @@ defmodule Cataract.SetupLibraryTest do
     assert visible_in_page?(~r/Disks/)
     click({:link_text, "Register Disk"})
     fill_field({:name, "path"}, fs_root)
-    submit_element({:link_text, "Register"})
+    click({:tag, "button"})
 
-    assert visible_in_page?(~r/test_fs/)
+    assert visible_in_page?(~r/test_fs/), "Does not show name of created disk"
     # wait for the indexers to run
     :timer.sleep(1000)
     assert visible_in_page?(~r/Incoming/), "Imports and shows Directory"

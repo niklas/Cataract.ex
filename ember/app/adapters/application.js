@@ -1,5 +1,11 @@
-import DS from 'ember-data';
+import PhoenixAdapter from "ember-phoenix-adapter";
 
-export default DS.RESTAdapter.extend({
-  namespace: 'api/1'
+export default PhoenixAdapter.extend({
+  addEvents: ["add", "create"],
+
+  joinParams: function() {
+    return { authToken: "verysecrettoken" };
+  }.property("token"),
+
+  shouldReloadAll: function() { return true },
 });
