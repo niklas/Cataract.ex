@@ -1,3 +1,11 @@
+{{#if model.isError}}
+<div class="errors">
+  {{#each model.errors as |error|}}
+  <div>Error: {{error}}</div>
+  {{/each}}
+</div>
+{{/if}}
+
 
 <div>
   <label for="path">Path</label>

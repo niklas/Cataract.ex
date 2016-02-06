@@ -4,6 +4,7 @@ defmodule Cataract.UserSocket do
   ## Channels
   # channel "rooms:*", Cataract.RoomChannel
   channel "transfers:*", Cataract.TransferChannel
+  channel "disks:*", Cataract.DiskChannel
 
   channel "test:*", Cataract.TestChannel
 
