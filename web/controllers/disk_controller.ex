@@ -5,7 +5,9 @@ defmodule Cataract.DiskController do
   alias Cataract.Library
 
   def show conn, %{"id" => id} do
-    render conn, model: Cataract.Repo.get(Disk, id)
+    disk =  Cataract.Repo.get(Disk, id)
+    :timer.apply_after 1500, Library, :index, [disk]
+    render conn, model: disk
   end
 
   def create conn, %{"attributes" => params} do

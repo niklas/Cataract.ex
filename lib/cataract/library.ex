@@ -7,17 +7,19 @@ defmodule Cataract.Library do
   end
 
   def index thingy  do
+    Logger.debug("########## will index")
     GenServer.cast {:global, "Lib"}, {:index, thingy }
   end
 
 
   ### GenServer API
 
+  # Cataract.Library.index(Cataract.Repo.get(Cataract.Disk, 2))
+
   def handle_cast({:index, %Cataract.Disk{} = disk}, status) do
     Logger.debug("########## Indexing disk #{disk.path}")
 
-    Cataract.Endpoint.broadcast!("directory:index", "create",
-      %{data: %{
+    Cataract.Endpoint.broadcast!("directory:index", "create", %{data: %{
           id: 2342,
           attributes: %{name: "Incoming", path: "/foo/var"},
           relationships: %{
