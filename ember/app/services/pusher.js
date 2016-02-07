@@ -17,7 +17,7 @@ export default Ember.Service.extend({
   subscribe(modelName) {
     let joined = this.get('channels');
     // only join once
-    if ( Ember.isPresent( joined.get('modelName') ) ) { return; }
+    if ( Ember.isPresent( joined.get(modelName) ) ) { return; }
 
     let socket = this.get('phoenix');
     let store  = this.get('store');
