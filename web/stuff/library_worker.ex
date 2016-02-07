@@ -14,22 +14,27 @@ defmodule Cataract.LibraryWorker do
   ### Privates
 
   def ensure_path(disk, [root]) do
-    Repo.preload disk, :directories
     query = from w in Directory,
             where: w.path == ^root
     case Repo.one(Directory.for_disk(query, disk)) do
       nil ->
-        Cataract.Endpoint.broadcast!(
-          "directory:index", "create", %{data: %{
-              id: root,
-              attributes: %{name: root, path: root},
-              relationships: %{
-                disk: %{data: %{type: "disks", id: disk.id}},
-              },
-              type: "directories",
-          }}
-        )
-      directory -> directory
+        directory = disk
+          |> Ecto.build_assoc(:directories)
+          |> Directory.changeset(%{path: root})
+          |> Repo.insert!
+        broadcast_create!(directory)
+        directory
+      directory ->
+        broadcast_create!(directory)
+        directory
     end
+  end
+
+  def broadcast_create!(record) do
+    topic = "directory:index"
+    conn = %{}
+    record = Repo.preload record, :disk
+    jsonapi = Cataract.DirectoryView.format(record, conn)
+    Cataract.Endpoint.broadcast!(topic, "create", jsonapi)
   end
 end

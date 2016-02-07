@@ -3,7 +3,5 @@ defmodule Cataract.LibraryWorkerTest do
 
   alias Cataract.LibraryWorker
 
-  test "something" do
-    assert 1 == 2
-  end
+  # no idea how to test this as a unit
 end
