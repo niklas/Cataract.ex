@@ -18,6 +18,8 @@
   "hound": {:hex, :hound, "0.8.2"},
   "httpoison": {:hex, :httpoison, "0.8.1"},
   "idna": {:hex, :idna, "1.0.3"},
+  "inflex": {:hex, :inflex, "1.5.0"},
+  "ja_serializer": {:hex, :ja_serializer, "0.7.0"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
   "mix_test_watch": {:hex, :mix_test_watch, "0.2.5"},
   "neotoma": {:hex, :neotoma, "1.7.3"},

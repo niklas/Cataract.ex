@@ -1,10 +1,10 @@
-{{#if model.isError}}
+{{#unless model.isValid}}
 <div class="errors">
-  {{#each model.errors as |error|}}
-  <div>Error: {{error}}</div>
+  {{#each model.errors.messages as |error|}}
+  <div>{{error}}</div>
   {{/each}}
 </div>
-{{/if}}
+{{/unless}}
 
 
 <div>

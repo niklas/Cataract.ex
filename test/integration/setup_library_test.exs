@@ -24,7 +24,9 @@ defmodule Cataract.SetupLibraryTest do
     fill_field({:name, "path"}, fs_root)
     click({:tag, "button"})
 
-    assert visible_in_page?(~r/test_fs/), "Does not show name of created disk"
+    :timer.sleep(1000)
+    assert visible_in_page?(~r/#{fs_root}/), "Does not show path of created disk"
+    assert visible_in_page?(~r/[^\/]test_fs/), "Does not show name of created disk"
     # wait for the indexers to run
     :timer.sleep(1000)
     assert visible_in_page?(~r/Incoming/), "Imports and shows Directory"

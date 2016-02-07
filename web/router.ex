@@ -9,10 +9,6 @@ defmodule Cataract.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", Cataract do
     pipe_through :browser # Use the default browser stack
 
@@ -25,9 +21,16 @@ defmodule Cataract.Router do
     get "/ember", EmberController, :index
   end
 
+  pipeline :api do
+    plug :accepts, ["json-api"]
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
+  end
+
   # Other scopes may use custom stacks.
   scope "/api/1", Cataract do
     pipe_through :api
     get "/transfers", TransferController, :index
+    resources "/disks", DiskController
   end
 end

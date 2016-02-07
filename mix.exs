@@ -52,6 +52,7 @@ defmodule Cataract.Mixfile do
      {:phoenix_ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.3"},
+     {:ja_serializer, "~> 0.7.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:hound, "~> 0.8.2"},

@@ -6,7 +6,10 @@ export default Ember.Route.extend({
   },
   actions: {
     createDisk: function(disk) {
-      return disk.save()
+      var that = this;
+      return disk.save().then(function() {
+        that.transitionTo('library.disks.show', disk)
+      });
     },
   },
 });

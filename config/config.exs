@@ -29,3 +29,7 @@ config :phoenix, :generators,
   binary_id: false
 
 config :hound, driver: "chrome_driver"
+
+config :plug, :mimes, %{
+  "application/vnd.api+json" => ["json-api"]
+}

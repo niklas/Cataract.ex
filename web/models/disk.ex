@@ -8,8 +8,8 @@ defmodule Cataract.Disk do
     timestamps
   end
 
-  @required_fields ~w(name path)
-  @optional_fields ~w()
+  @required_fields ~w(path)
+  @optional_fields ~w(name)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

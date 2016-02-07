@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('library', function() {
     this.route('disks', function() {
       this.route('new');
+      this.route('show', { path: "/show/:disk_id" });
     });
   });
 });
