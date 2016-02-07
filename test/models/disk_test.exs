@@ -3,12 +3,15 @@ defmodule Cataract.DiskTest do
 
   alias Cataract.Disk
 
-  @valid_attrs %{name: "some content", path: "some content"}
+  @valid_attrs %{path: "/foo/bar/baz"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
     changeset = Disk.changeset(%Disk{}, @valid_attrs)
     assert changeset.valid?
+
+    assert Ecto.Changeset.get_field(changeset, :name) == "baz",
+      "does not set name from path"
   end
 
   test "changeset with invalid attributes" do
