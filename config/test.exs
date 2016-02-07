@@ -7,7 +7,8 @@ config :cataract, Cataract.Endpoint,
   server: true
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+# config :logger, level: :warn
+config :logger, :console, format: "[$level] $message\n"
 
 # Configure your database
 config :cataract, Cataract.Repo,
