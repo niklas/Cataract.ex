@@ -6,7 +6,7 @@ defmodule Cataract.DiskController do
 
   def show conn, %{"id" => id} do
     disk =  Cataract.Repo.get(Disk, id)
-    Library.index(disk)
+    Library.later(:index, disk)
     render conn, model: disk
   end
 
@@ -15,7 +15,7 @@ defmodule Cataract.DiskController do
 
     case Repo.insert(changeset) do
       {:ok, disk} ->
-        Library.index(disk)
+        Library.later(:index, disk)
         conn
         |> put_status(201)
         |> render(:show, data: disk)
