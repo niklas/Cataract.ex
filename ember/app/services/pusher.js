@@ -2,6 +2,7 @@ import Ember from 'ember';
 import {Socket} from "cataract/vendor/phoenix";
 
 export default Ember.Service.extend({
+  store: Ember.inject.service(),
   channels: null,
 
   init() {
@@ -15,10 +16,11 @@ export default Ember.Service.extend({
 
   subscribe(modelName) {
     let joined = this.get('channels');
-    let socket = this.get('phoenix');
     // only join once
     if ( Ember.isPresent( joined.get('modelName') ) ) { return; }
 
+    let socket = this.get('phoenix');
+    let store  = this.get('store');
     let joinParams = {};
     let channel = socket.channel(`${modelName}:index`, joinParams);
 
@@ -31,7 +33,7 @@ export default Ember.Service.extend({
         joined.set(modelName, channel);
       });
     channel.on("create", (response) => {
-      this.store.pushPayload(response);
+      store.pushPayload(response);
     });
     channel.on("destroy", (response) => {
       store.peek(modelName, response.id).then((model) => {
