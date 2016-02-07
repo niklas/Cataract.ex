@@ -1,11 +1,5 @@
-import PhoenixAdapter from "ember-phoenix-adapter";
+import ApplicationAdapter from "./application";
 
-export default PhoenixAdapter.extend({
-  addEvents: ["add", "create"],
-
-  joinParams: function() {
-    return { authToken: "verysecrettoken" };
-  }.property("token"),
-
-  shouldReloadAll: function() { return true },
+export default ApplicationAdapter.extend({
+  shouldReloadAll: function() { return true; },
 });

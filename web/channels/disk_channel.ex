@@ -5,7 +5,7 @@ defmodule Cataract.DiskChannel do
   alias Cataract.Disk
   alias Cataract.Repo
 
-  def join("disks:create", _message, socket) do
+  def join("disk:create", _message, socket) do
     Logger.debug "=== join #{socket.topic}"
 
     {:ok, socket}

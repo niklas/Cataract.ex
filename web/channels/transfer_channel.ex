@@ -2,7 +2,7 @@ defmodule Cataract.TransferChannel do
   use Phoenix.Channel
   require Logger
 
-  def join("transfers:all", message, socket) do
+  def join("transfer:index", message, socket) do
     Process.flag(:trap_exit, true)
     :timer.send_interval(1000, :publish_all)
     send(self, {:after_join, message})
@@ -10,7 +10,7 @@ defmodule Cataract.TransferChannel do
     {:ok, socket}
   end
 
-  def join("transfers:" <> _private_subtopic, _message, _socket) do
+  def join("transfer:" <> _private_subtopic, _message, _socket) do
     {:error, %{reason: "unauthorized"}}
   end
 

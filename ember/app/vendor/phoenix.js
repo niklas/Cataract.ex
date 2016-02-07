@@ -1,0 +1,1 @@
+../../../deps/phoenix/web/static/js/phoenix.js
