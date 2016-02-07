@@ -17,9 +17,10 @@ defmodule Cataract.Library do
   # Cataract.Library.index(Cataract.Repo.get(Cataract.Disk, 2))
 
   def handle_cast({:index, %Cataract.Disk{} = disk}, status) do
+    delay = 500
     Logger.debug("########## Indexing disk #{disk.path}")
-
-    Cataract.Endpoint.broadcast!("directory:index", "create", %{data: %{
+    :timer.apply_after delay, Cataract.Endpoint, :broadcast!, [
+      "directory:index", "create", %{data: %{
           id: 2342,
           attributes: %{name: "Incoming", path: "/foo/var"},
           relationships: %{
@@ -27,7 +28,7 @@ defmodule Cataract.Library do
           },
           type: "directories",
       }}
-    )
+    ]
     {:noreply, status}
   end
 end

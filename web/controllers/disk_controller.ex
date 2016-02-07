@@ -6,7 +6,7 @@ defmodule Cataract.DiskController do
 
   def show conn, %{"id" => id} do
     disk =  Cataract.Repo.get(Disk, id)
-    :timer.apply_after 1500, Library, :index, [disk]
+    Library.index(disk)
     render conn, model: disk
   end
 
