@@ -4,7 +4,7 @@ defmodule Cataract.TransferChannel do
 
   def join("transfer:index", message, socket) do
     Process.flag(:trap_exit, true)
-    :timer.send_interval(1000, :publish_all)
+    :timer.send_interval(100000, :publish_all)
     send(self, {:after_join, message})
 
     {:ok, socket}
