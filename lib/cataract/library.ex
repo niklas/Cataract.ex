@@ -1,9 +1,10 @@
 require Logger
 defmodule Cataract.Library do
   use GenServer
+  alias Cataract.FileServer
 
   def start_link do
-    GenServer.start_link(__MODULE__, [], name: {:global, "Lib"})
+    GenServer.start_link(__MODULE__, %{}, name: {:global, "Lib"})
   end
 
   def index thingy  do
@@ -20,19 +21,16 @@ defmodule Cataract.Library do
 
   #  Library.later(:index, Cataract.Repo.get(Cataract.Disk, 2))
   # Cataract.Library.index(Cataract.Repo.get(Cataract.Disk, 2))
+  def init(status) do
+    status = Map.put( status, :file_servers, %{} )
+    { :ok, status }
+  end
 
   def handle_cast({:index, %Cataract.Disk{} = disk}, status) do
     Logger.debug("########## Indexing disk #{disk.path}")
-    Cataract.Endpoint.broadcast!(
-      "directory:index", "create", %{data: %{
-          id: 2342,
-          attributes: %{name: "Incoming", path: "/foo/var"},
-          relationships: %{
-            disk: %{data: %{type: "disks", id: disk.id}},
-          },
-          type: "directories",
-      }}
-    )
+    file_server(status, disk.path)
+      |> FileServer.find_file_with_extension("torrent")
+      |> Enum.each(&Cataract.LibraryWorker.add_torrent/1)
     {:noreply, status}
   end
 
@@ -41,4 +39,15 @@ defmodule Cataract.Library do
     :timer.apply_after delay, __MODULE__, function, [args]
     {:noreply, status}
   end
+
+  def file_server(%{file_servers: list} = status, path) do
+    case Map.get(list, path) do
+      nil    ->
+        server = FileServer.start_link(path)
+        Map.put(list, path, server)
+        server
+      server -> server
+    end
+  end
+
 end
