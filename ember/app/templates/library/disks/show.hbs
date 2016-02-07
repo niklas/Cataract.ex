@@ -4,4 +4,11 @@
     {{model.path}}
   </small>
 </header>
+
+<ul>
+  {{#each model.directories as |directory|}}
+  <li>{{directory.name}}</li>
+  {{/each}}
+</ul>
+
 {{outlet}}
