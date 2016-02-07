@@ -1,18 +1,24 @@
-defmodule Cataract.Disk do
+defmodule Cataract.Directory do
   use Cataract.Web, :model
   alias Cataract.ModuleHelpers
 
-  schema "disks" do
+  schema "directories" do
     field :name, :string
     field :path, :string
-
-    has_many :directories, Cataract.Directory
+    belongs_to :disk, Cataract.Disk
+    belongs_to :parent, Cataract.Directory
 
     timestamps
   end
 
   @required_fields ~w(path)
   @optional_fields ~w(name)
+
+  def for_disk(query, disk) do
+    from c in query,
+    join: p in assoc(c, :disk),
+    where: p.id == ^disk.id
+  end
 
   @doc """
   Creates a changeset based on the `model` and `params`.

@@ -30,7 +30,7 @@ defmodule Cataract.Library do
     Logger.debug("########## Indexing disk #{disk.path}")
     file_server(status, disk.path)
       |> FileServer.find_file_with_extension("torrent")
-      |> Enum.each(&Cataract.LibraryWorker.add_torrent/1)
+      |> Enum.each(fn (p) -> Cataract.LibraryWorker.torrent(disk, p) end)
     {:noreply, status}
   end
 
