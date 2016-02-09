@@ -5,6 +5,7 @@ export default Ember.Route.extend({
   beforeModel() {
     this.get('pusher')
       .subscribe('directory')
+      .subscribe('torrent')
       .subscribe('transfer');
     return true;
   },

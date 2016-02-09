@@ -7,7 +7,16 @@
 
 <ul>
   {{#each model.directories as |directory|}}
-  <li>{{directory.name}} <small>{{directory.path}}</small></li>
+  <li>
+    <header>{{directory.name}}</header>
+    <small>{{directory.path}}</small>
+    {{#if directory.torrents.length}}
+      <span class="torrents_count">
+        Torrents:
+        {{directory.torrents.length}}
+      </span>
+    {{/if}}
+  </li>
   {{/each}}
 </ul>
 

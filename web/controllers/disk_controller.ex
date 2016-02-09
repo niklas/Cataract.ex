@@ -1,8 +1,13 @@
 defmodule Cataract.DiskController do
   use Cataract.Web, :controller
 
+  alias Cataract.Repo
   alias Cataract.Disk
   alias Cataract.Library
+
+  def index conn, _params do
+    render conn, model: Repo.all(Disk)
+  end
 
   def show conn, %{"id" => id} do
     disk =  Cataract.Repo.get(Disk, id)

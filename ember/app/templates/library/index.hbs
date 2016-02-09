@@ -1,5 +1,14 @@
 <section id="disks">
   <header>Disks</header>
+  <ul>
+    {{#each disks as |disk|}}
+    <li>
+      {{#link-to 'library.disks.show' disk}}
+        {{disk.name}}
+      {{/link-to}}
+    </li>
+    {{/each}}
+  </ul>
 </section>
 
 {{#link-to 'library.disks.new'}}Register Disk{{/link-to}}

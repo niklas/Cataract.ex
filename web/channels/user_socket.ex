@@ -6,6 +6,7 @@ defmodule Cataract.UserSocket do
   channel "transfer:*", Cataract.TransferChannel
   channel "disk:*", Cataract.DiskChannel
   channel "directory:*", Cataract.DirectoryChannel
+  channel "torrent:*", Cataract.TorrentChannel
 
   channel "test:*", Cataract.TestChannel
 

@@ -8,6 +8,8 @@ defmodule Cataract.Directory do
     belongs_to :disk, Cataract.Disk
     belongs_to :parent, Cataract.Directory
 
+    has_many :torrents, Cataract.Torrent
+
     timestamps
   end
 

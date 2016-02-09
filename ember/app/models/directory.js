@@ -5,4 +5,5 @@ export default DS.Model.extend({
   path: DS.attr('string'),
   parent: DS.belongsTo('directory'),
   disk: DS.belongsTo('disk'),
+  torrents: DS.hasMany('torrent', {async: false}),
 });
