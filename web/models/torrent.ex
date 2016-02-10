@@ -5,13 +5,14 @@ defmodule Cataract.Torrent do
     field :name, :string
     field :filename, :string
     field :size_bytes, :integer
+    field :info_hash, :string
     belongs_to :directory, Cataract.Directory
 
     timestamps
   end
 
   @required_fields ~w(filename)
-  @optional_fields ~w(name size_bytes)
+  @optional_fields ~w(name size_bytes info_hash)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

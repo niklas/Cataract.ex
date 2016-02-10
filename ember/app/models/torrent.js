@@ -5,4 +5,5 @@ export default DS.Model.extend({
   filename: DS.attr('string'),
   directory: DS.belongsTo('directory'),
   sizeBytes: DS.attr('number'),
+  infoHash: DS.attr('string'),
 });
