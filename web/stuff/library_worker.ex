@@ -34,15 +34,10 @@ defmodule Cataract.LibraryWorker do
     filename = Path.basename(path)
     case Repo.one(from t in Torrent, where: t.filename == ^filename) do
       nil ->
-        %{size_bytes: size, info_hash: info_hash} =
-          Cataract.TorrentFile.meta_from_file(path)
         directory
           |> Ecto.build_assoc(:torrents)
-          |> Torrent.changeset(%{
-            filename:          filename,
-            size_bytes:        size,
-            info_hash:         info_hash
-          })
+          |> Torrent.changeset(%{filename: filename})
+          |> Torrent.changeset(Cataract.TorrentFile.meta_from_file(path))
           |> Repo.insert!
           |> broadcast_create!
       torrent ->
