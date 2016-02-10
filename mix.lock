@@ -22,7 +22,7 @@
   "inflex": {:hex, :inflex, "1.5.0"},
   "ja_serializer": {:hex, :ja_serializer, "0.7.0"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
-  "mix_test_watch": {:hex, :mix_test_watch, "0.2.5"},
+  "mix_test_watch": {:git, "https://github.com/niklas/mix-test.watch.git", "831d37f05b047155962d44457f307e85e38e9f63", [branch: "feature/single-file-first"]},
   "neotoma": {:hex, :neotoma, "1.7.3"},
   "phoenix": {:hex, :phoenix, "1.1.0"},
   "phoenix_ecto": {:hex, :phoenix_ecto, "2.0.0"},
