@@ -5,6 +5,7 @@ defmodule Cataract.TorrentView do
   attributes [
     :name,
     :filename,
+    :size_bytes,
   ]
 
   has_one :directory,

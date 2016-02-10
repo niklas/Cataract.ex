@@ -58,6 +58,7 @@ defmodule Cataract.Mixfile do
      {:hound, "~> 0.8.2"},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},
+     {:elixir_bencode, "~> 1.0.0"},
      {:erlsom, github: "willemdj/erlsom"},
      {:xmlrpc, github: "niklas/elixir-xml_rpc", branch: "feature/64-bit-integers"},
      {:exrm, "~> 0.19.9"},

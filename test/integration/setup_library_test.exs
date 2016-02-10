@@ -28,8 +28,10 @@ defmodule Cataract.SetupLibraryTest do
     assert visible_in_page?(~r/#{fs_root}/), "Does not show path of created disk"
     assert visible_in_page?(~r/[^\/]test_fs/), "Does not show name of created disk"
     # wait for the indexers to run
+    :timer.sleep(1000)
     assert visible_in_page?(~r/Incoming/), "Imports and shows Directory"
     assert visible_in_page?(~r/Torrents: 3/), "Imports and show number of torrents"
-    assert visible_in_page?(~r/Accounted Space: 123kByte/), "Show how much used space is accounted for"
+    assert visible_in_page?(~r/Claimed Space: 686640726 Bytes/), "Show how much used bytes are accounted for"
+    #assert visible_in_page?(~r/Accounted Space: 123kByte/), "Show how much used space is accounted for"
   end
 end

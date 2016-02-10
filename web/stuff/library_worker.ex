@@ -8,9 +8,8 @@ defmodule Cataract.LibraryWorker do
 
   def torrent disk, path do
     parents = path |> Path.dirname |> Path.split
-    name    = path |> Path.basename
     ensure_path(disk, parents)
-    |> ensure_torrent(name)
+    |> ensure_torrent(disk.path <> "/" <> path)
   end
 
   ### Privates
@@ -31,12 +30,14 @@ defmodule Cataract.LibraryWorker do
     end
   end
 
-  def ensure_torrent(directory, filename) do
+  def ensure_torrent(directory, path) do
+    filename = Path.basename(path)
     case Repo.one(from t in Torrent, where: t.filename == ^filename) do
       nil ->
+        %{size_bytes: size} = Cataract.TorrentFile.meta_from_file(path)
         directory
           |> Ecto.build_assoc(:torrents)
-          |> Torrent.changeset(%{filename: filename})
+          |> Torrent.changeset(%{filename: filename, size_bytes: size})
           |> Repo.insert!
           |> broadcast_create!
       torrent ->
