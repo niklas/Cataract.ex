@@ -3,6 +3,7 @@ defmodule Cataract.SetupLibraryTest do
 
   # Import Hound helpers
   use Hound.Helpers
+  import Cataract.HtmlHoundHelpers
 
   # Start a Hound session
   hound_session
@@ -29,29 +30,11 @@ defmodule Cataract.SetupLibraryTest do
     assert visible_in_page?(~r/[^\/]test_fs/), "Does not show name of created disk"
     # wait for the indexers to run
 
-    expected = [
+    assert [
       [ "private_torrents" ,  nil           ,  nil                              ],
       [ "torrents"         ,  nil           ,  nil                              ],
       [ "CatPorn"          ,  "Torrents: 1" ,  "Accounted Space: 165.9 KiBytes" ],
       [ "Incoming"         ,  "Torrents: 2" ,  "Accounted Space: 143.6 KiBytes" ],
-    ]
-
-    element = find_element(:css, ".directories")
-    selectors = ["header", ".torrents_count", ".space"]
-    actual = "<ul id=\"root\">" <> inner_html(element) <> "</ul>"
-      |> Floki.find("ul#root>li")
-      |> Enum.map(fn ({_tag, _at, kids})->
-        Enum.map(selectors, fn (selector)->
-          case Floki.find(kids, selector) do
-            [{_t, _at, [text]}] ->
-              text
-              |> String.replace(~r/\s+/, " ")
-              |> String.strip
-            _ -> nil
-          end
-        end)
-      end)
-
-    assert expected == actual
+    ] == find_list(".directories", ["header", ".torrents_count", ".space"])
   end
 end
