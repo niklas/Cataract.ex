@@ -26,6 +26,17 @@ defmodule Cataract.Torrent do
     |> cast(params, @required_fields, @optional_fields)
   end
 
+  @doc """
+  Updates the payload directory and returns the updated record
+  """
+  def update_payload_directory!(torrent, dir) do
+    torrent
+      |> changeset(%{payload_directory_id: dir.id})
+      |> Cataract.Repo.update!
+    # reload so we can preload assoc with the new value
+    Cataract.Repo.get(__MODULE__, torrent.id)
+  end
+
   def absolute_file_path(torrent) do
     Path.join(
       Cataract.Directory.absolute_path(torrent.directory),

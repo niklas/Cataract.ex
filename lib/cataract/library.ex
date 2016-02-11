@@ -47,7 +47,6 @@ defmodule Cataract.Library do
   def handle_cast({:index, %Torrent{} = torrent}, status) do
     torrent = Repo.preload(torrent, [ :payload_directory, [directory: :disk] ])
     if torrent.payload_directory do
-      Logger.debug("########## pd #{torrent.payload_directory}")
       Worker.verify_payload!(torrent)
     else
       Logger.debug("########## Finding payload for #{torrent.filename}")

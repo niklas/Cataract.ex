@@ -41,8 +41,7 @@ defmodule Cataract.LibraryWorker do
           Logger.debug "!!!!!!! found #{absolute}"
           dir = ensure_path(disk, Path.split(from_disk))
           torrent
-          |> Torrent.changeset(%{payload_directory_id: dir.id})
-          |> Repo.update!
+          |> Torrent.update_payload_directory!(dir)
           |> broadcast_update!
         end
       end)
@@ -100,6 +99,7 @@ defmodule Cataract.LibraryWorker do
 
   def broadcast_create!(record, topic, serializer) do
     jsonapi = serializer.format(record, %{})
+    Logger.debug "broadcasting to #{topic}: #{inspect jsonapi}"
     Cataract.Endpoint.broadcast!(topic, "create", jsonapi)
     record
   end

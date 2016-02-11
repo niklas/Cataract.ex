@@ -32,7 +32,7 @@ defmodule Cataract.SetupLibraryTest do
     assert visible_in_page?(~r/Incoming/), "Imports and shows Directory"
     assert visible_in_page?(~r/Torrents: 3/), "Imports and show number of torrents"
     assert visible_in_page?(~r/Claimed Space: 686640726 Bytes/), "Show how much bytes the torrents might contain"
-    assert visible_in_page?(~r/Accounted Space: 73707 Bytes/), "Show how much space is actually used"
+    assert visible_in_page?(~r/Accounted Space: 147030 Bytes/), "Show how much space is actually used"
     #assert visible_in_page?(~r/Accounted Space: 123kByte/), "Show how much used space is accounted for"
   end
 end
