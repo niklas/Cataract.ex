@@ -46,7 +46,7 @@ defmodule Cataract.FileServer do
         |> Enum.map( fn (abs) -> Path.relative_to(abs, root) end)
         {:reply, paths, status}
       { _, 1 } ->
-        {:reply, :not_found, status}
+        {:reply, [], status}
     end
   end
 end

@@ -13,7 +13,9 @@ export default DS.Model.extend({
   sizeBytesOfTorrents: c.mapBy('torrents', 'sizeBytes'),
   sizeBytes: c.sum('sizeBytesOfTorrents'),
 
-  torrentsWithPayload: c.filterProperty('torrents', 'payloadDirectory'),
+  torrentsWithPayload: c.filter('torrents', function(torrent, _i, _a) {
+    return torrent.get('payloadDirectory');
+  }),
   sizeBytesOfTorrentsWithPayload: c.mapBy('torrentsWithPayload', 'sizeBytes'),
   sizeBytesActual: c.sum('sizeBytesOfTorrentsWithPayload'),
 });

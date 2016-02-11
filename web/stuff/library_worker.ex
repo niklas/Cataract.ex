@@ -29,16 +29,19 @@ defmodule Cataract.LibraryWorker do
 
     # Stream?
     sources
-    |> Enum.each( fn({disk, index})->
-      IO.puts ">>>>>> searching #{first_file} on #{disk.path}"
+    |> Enum.find( fn({disk, index})->
+      Logger.debug ">>>>>> searching #{first_file} on #{disk.path} [#{inspect index}]"
       index
-      |> FileServer.find_file(first_file)
-      |> Enum.each( fn(cand)->
-        path = Path.dirname(cand)
-        if TorrentFile.payload_exists?(meta, path) do
-          dir = ensure_path(disk, path)
+      |> FileServer.find_file(Path.join first_file)
+      |> Enum.find( fn(cand)->
+        from_disk = Path.dirname(cand)
+        absolute = Path.join( disk.path, from_disk)
+        Logger.debug "??????? maybe #{cand} at #{absolute}"
+        if TorrentFile.payload_exists?(meta, absolute) do
+          Logger.debug "!!!!!!! found #{absolute}"
+          dir = ensure_path(disk, Path.split(from_disk))
           torrent
-          |> Torrent.changeset(%{payload_directory: dir})
+          |> Torrent.changeset(%{payload_directory_id: dir.id})
           |> Repo.update!
           |> broadcast_update!
         end

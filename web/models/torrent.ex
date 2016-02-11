@@ -13,7 +13,7 @@ defmodule Cataract.Torrent do
   end
 
   @required_fields ~w(filename)
-  @optional_fields ~w(name size_bytes info_hash)
+  @optional_fields ~w(name size_bytes info_hash payload_directory_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
