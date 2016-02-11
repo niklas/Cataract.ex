@@ -1,9 +1,10 @@
 defmodule Cataract.HtmlHoundHelpers do
   use Hound.Helpers
-  def find_list(list_selector, selectors) do
-    element = find_element(:css, list_selector)
-    actual = "<ul id=\"root\">" <> inner_html(element) <> "</ul>"
-      |> Floki.find("ul#root>li")
+  def find_list(list_selector, line_selector, selectors) do
+    actual = find_element(:tag, "html")
+      |> inner_html
+      |> Floki.parse
+      |> Floki.find(list_selector <> ">" <> line_selector)
       |> Enum.map(fn ({_tag, _at, kids})->
         Enum.map(selectors, fn (selector)->
           case Floki.find(kids, selector) do

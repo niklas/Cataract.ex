@@ -35,6 +35,11 @@ defmodule Cataract.SetupLibraryTest do
       [ "torrents"         ,  nil           ,  nil                              ],
       [ "CatPorn"          ,  "Torrents: 1" ,  "Accounted Space: 165.9 KiBytes" ],
       [ "Incoming"         ,  "Torrents: 2" ,  "Accounted Space: 143.6 KiBytes" ],
-    ] == find_list(".directories", ["header", ".torrents_count", ".space"])
+    ] == find_list("ul.directories", "li", ["header", ".torrents_count", ".space"])
+
+    assert [
+      [ "single" ],
+      [ "multiple" ],
+    ] == find_list("ul.directories > li:last ul.torrents", "li", [".name"])
   end
 end
