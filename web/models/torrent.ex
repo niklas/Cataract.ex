@@ -7,6 +7,7 @@ defmodule Cataract.Torrent do
     field :size_bytes, :integer
     field :info_hash, :string
     belongs_to :directory, Cataract.Directory
+    belongs_to :payload_directory, Cataract.Directory
 
     timestamps
   end
@@ -23,5 +24,12 @@ defmodule Cataract.Torrent do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def absolute_file_path(torrent) do
+    Path.join(
+      Cataract.Directory.absolute_path(torrent.directory),
+      torrent.filename
+    )
   end
 end

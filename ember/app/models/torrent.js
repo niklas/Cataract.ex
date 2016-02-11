@@ -6,4 +6,5 @@ export default DS.Model.extend({
   directory: DS.belongsTo('directory'),
   sizeBytes: DS.attr('number'),
   infoHash: DS.attr('string'),
+  payloadDirectory: DS.belongsTo('directory', {async: false}),
 });

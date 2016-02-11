@@ -8,6 +8,10 @@ defmodule Cataract.FileServer do
     pid
   end
 
+  def find_file(server, pathlist) when is_list(pathlist) do
+    find_file(server, Path.join(pathlist))
+  end
+
   def find_file(server, filename) do
     :gen_server.call server, {:find_file, filename <> "$"}
   end

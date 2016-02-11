@@ -12,5 +12,7 @@ defmodule Cataract.TorrentView do
   has_one :directory,
     serializer: Cataract.DirectoryView
 
+  has_one :payload_directory,
+    serializer: Cataract.DirectoryView
 end
 

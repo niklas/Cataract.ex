@@ -2,14 +2,24 @@ require Logger
 defmodule Cataract.Library do
   use GenServer
   alias Cataract.FileServer
+  alias Cataract.Repo
+  alias Cataract.Disk
+  alias Cataract.Torrent
+  alias Cataract.LibraryWorker, as: Worker
 
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: {:global, "Lib"})
   end
 
   def index thingy  do
-    Logger.debug("########## will index")
     GenServer.cast {:global, "Lib"}, {:index, thingy }
+  end
+
+  @spec index!(Ecto.Model.t) :: Ecto.Model.t
+
+  def index! thingy do
+    :ok = index thingy
+    thingy
   end
 
   def later function, args do
@@ -26,11 +36,26 @@ defmodule Cataract.Library do
     { :ok, status }
   end
 
-  def handle_cast({:index, %Cataract.Disk{} = disk}, status) do
+  def handle_cast({:index, %Disk{} = disk}, status) do
     Logger.debug("########## Indexing disk #{disk.path}")
     file_server(status, disk.path)
       |> FileServer.find_file_with_extension("torrent")
-      |> Enum.each(fn (p) -> Cataract.LibraryWorker.torrent(disk, p) end)
+      |> Enum.each(fn (p) -> Worker.torrent(disk, p) end)
+    {:noreply, status}
+  end
+
+  def handle_cast({:index, %Torrent{} = torrent}, status) do
+    torrent = Repo.preload(torrent, [ :payload_directory, [directory: :disk] ])
+    if torrent.payload_directory do
+      Logger.debug("########## pd #{torrent.payload_directory}")
+      Worker.verify_payload!(torrent)
+    else
+      Logger.debug("########## Finding payload for #{torrent.filename}")
+      sources = Disk
+        |> Repo.all
+        |> Enum.map( fn(d)-> {d, file_server(status, d.path)} end)
+      Worker.find_payload!(torrent, sources)
+    end
     {:noreply, status}
   end
 

@@ -34,4 +34,11 @@ defmodule Cataract.Directory do
     |> ModuleHelpers.set_name_from_path
     |> unique_constraint(:path)
   end
+
+  def absolute_path(directory) do
+    Path.join(
+      directory.disk.path,
+      directory.path
+    )
+  end
 end

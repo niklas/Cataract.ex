@@ -1,5 +1,15 @@
 defmodule Cataract.TorrentFile do
-  def meta_from_file(file) do
+  alias Cataract.Torrent, as: T
+
+  def meta(%T{} = torrent) do
+    meta T.absolute_file_path(torrent)
+  end
+
+  def meta(%{} = already) do
+    already
+  end
+
+  def meta(file) do
     case decode_file(file) do
         # single file
         {:ok, %{"info" => info = %{"length" => size, "name" => name} } } ->
@@ -25,7 +35,7 @@ defmodule Cataract.TorrentFile do
   end
 
   def payload_exists?(torrent_path, payload_path) do
-    case meta_from_file(torrent_path) do
+    case meta(torrent_path) do
       %{files: files} ->
         files
           |> Enum.map( fn (%{"path" => f, "length" => s})->

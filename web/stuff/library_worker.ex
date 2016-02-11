@@ -1,8 +1,12 @@
+require Logger
 defmodule Cataract.LibraryWorker do
   alias Cataract.Repo
   alias Cataract.Disk
   alias Cataract.Directory
   alias Cataract.Torrent
+  alias Cataract.Library
+  alias Cataract.TorrentFile
+  alias Cataract.FileServer
 
   import Ecto.Query, only: [from: 2]
 
@@ -10,6 +14,38 @@ defmodule Cataract.LibraryWorker do
     parents = path |> Path.dirname |> Path.split
     ensure_path(disk, parents)
     |> ensure_torrent(disk.path <> "/" <> path)
+  end
+
+  # verify if payload is still there, else => set nil
+  def verify_payload!(torrent) do
+    Logger.debug("########## Verifying payload for #{torrent.filename}")
+    torrent
+  end
+
+  # search for payload on all disks
+  # assign first directory with full content as payload_directory
+  def find_payload!(torrent, sources) do
+    %{files: [%{"path" => first_file} |_rest]} = meta = TorrentFile.meta(torrent)
+
+    # Stream?
+    sources
+    |> Enum.each( fn({disk, index})->
+      IO.puts ">>>>>> searching #{first_file} on #{disk.path}"
+      index
+      |> FileServer.find_file(first_file)
+      |> Enum.each( fn(cand)->
+        path = Path.dirname(cand)
+        if TorrentFile.payload_exists?(meta, path) do
+          dir = ensure_path(disk, path)
+          torrent
+          |> Torrent.changeset(%{payload_directory: dir})
+          |> Repo.update!
+          |> broadcast_update!
+        end
+      end)
+    end)
+
+    torrent
   end
 
   ### Privates
@@ -37,13 +73,13 @@ defmodule Cataract.LibraryWorker do
         directory
           |> Ecto.build_assoc(:torrents)
           |> Torrent.changeset(%{filename: filename})
-          |> Torrent.changeset(Cataract.TorrentFile.meta_from_file(path))
+          |> Torrent.changeset(TorrentFile.meta(path))
           |> Repo.insert!
-          |> broadcast_create!
       torrent ->
-        broadcast_create!(torrent)
         torrent
     end
+      |> Library.index!
+      |> broadcast_create!
   end
 
   def broadcast_create!(%Directory{} = directory) do
@@ -55,6 +91,7 @@ defmodule Cataract.LibraryWorker do
   def broadcast_create!(%Torrent{} = torrent) do
     torrent
       |> Repo.preload(:directory)
+      |> Repo.preload(:payload_directory)
       |> broadcast_create!("torrent:index", Cataract.TorrentView)
   end
 
@@ -62,5 +99,10 @@ defmodule Cataract.LibraryWorker do
     jsonapi = serializer.format(record, %{})
     Cataract.Endpoint.broadcast!(topic, "create", jsonapi)
     record
+  end
+
+  # actually update
+  def broadcast_update!(thingy) do
+    broadcast_create!(thingy)
   end
 end
