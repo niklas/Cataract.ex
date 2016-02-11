@@ -17,11 +17,11 @@
       </span>
       <span class="spaaace">
         Claimed Space:
-        {{directory.sizeBytes}} Bytes
+        {{human-kilo-bytes directory.sizeBytes}}
       </span>
       <span class="spaaace">
         Accounted Space:
-        {{directory.sizeBytesActual}} Bytes
+        {{human-kilo-bytes directory.sizeBytesActual}}
       </span>
     {{/if}}
   </li>
