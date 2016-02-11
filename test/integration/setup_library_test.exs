@@ -28,11 +28,36 @@ defmodule Cataract.SetupLibraryTest do
     assert visible_in_page?(~r/#{fs_root}/), "Does not show path of created disk"
     assert visible_in_page?(~r/[^\/]test_fs/), "Does not show name of created disk"
     # wait for the indexers to run
-    :timer.sleep(1000)
-    assert visible_in_page?(~r/Incoming/), "Imports and shows Directory"
-    assert visible_in_page?(~r/Torrents: 3/), "Imports and show number of torrents"
-    assert visible_in_page?(~r/Claimed Space: 654.8 MiBytes/), "Show how much bytes the torrents might contain"
-    assert visible_in_page?(~r/Accounted Space: 143.6 KiBytes/), "Show how much space is actually used"
+
+    expected = [
+      [ "private_torrents" ,  nil           ,  nil                              ],
+      [ "torrents"         ,  nil           ,  nil                              ],
+      [ "CatPorn"          ,  "Torrents: 1" ,  "Accounted Space: 165.9 KiBytes" ],
+      [ "Incoming"         ,  "Torrents: 2" ,  "Accounted Space: 143.6 KiBytes" ],
+      # TODO: these should NOT be here, they are torrents and not #root>li
+      [ nil, nil, nil],
+      [ nil, nil, nil],
+      [ nil, nil, nil],
+    ]
+
+    element = find_element(:css, ".directories")
+    selectors = ["header", ".torrents_count", ".space"]
+    actual = "<ul id=\"root\">" <> inner_html(element) <> "</ul>"
+      |> Exquery.tree
+      |> Exquery.Query.css("ul#root>li")
+      |> Enum.map(fn ({_line, kids})->
+        Enum.map(selectors, fn (selector)->
+          case Exquery.Query.css(kids, selector) do
+            [{_, [{:text, text, _}]}] ->
+              text
+              |> String.replace(~r/\s+/, " ")
+              |> String.strip
+            _ -> nil
+          end
+        end)
+      end)
+
+    assert expected == actual
     #assert visible_in_page?(~r/Accounted Space: 123kByte/), "Show how much used space is accounted for"
   end
 end

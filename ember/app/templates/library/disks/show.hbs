@@ -5,7 +5,7 @@
   </small>
 </header>
 
-<ul>
+<ul class="directories">
   {{#each model.directories as |directory|}}
   <li>
     <header>{{directory.name}}</header>
@@ -15,14 +15,15 @@
         Torrents:
         {{directory.torrents.length}}
       </span>
-      <span class="spaaace">
-        Claimed Space:
+      <span class="space">
+        Accounted Space:
         {{human-kilo-bytes directory.sizeBytes}}
       </span>
-      <span class="spaaace">
-        Accounted Space:
-        {{human-kilo-bytes directory.sizeBytesActual}}
-      </span>
+      <ul class="torrents">
+        {{#each directory.torrents as |torrent|}}
+          <li>{{torrent.filename}}</li>
+        {{/each}}
+      </ul>
     {{/if}}
   </li>
   {{/each}}

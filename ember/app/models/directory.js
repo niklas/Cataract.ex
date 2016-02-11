@@ -8,14 +8,16 @@ export default DS.Model.extend({
   path: DS.attr('string'),
   parent: DS.belongsTo('directory'),
   disk: DS.belongsTo('disk'),
-  torrents: DS.hasMany('torrent', {async: false, inverse: 'directory'}),
+  torrentsAsFiles: DS.hasMany('torrent', {async: false, inverse: 'directory'}),
+
+  // the torrent files in this directory
+  torrentsHavingPayloadSomewhere: c.filter('torrents.@each.payloadDirectory', function(torrent, _i, _a) {
+    return !!torrent.get('payloadDirectory');
+  }),
+
+  // the torrents having payload in this directory
+  torrents: DS.hasMany('torrent', {async: false, inverse: 'payloadDirectory'}),
 
   sizeBytesOfTorrents: c.mapBy('torrents', 'sizeBytes'),
   sizeBytes: c.sum('sizeBytesOfTorrents'),
-
-  torrentsWithPayload: c.filter('torrents.@each.payloadDirectory', function(torrent, _i, _a) {
-    return !!torrent.get('payloadDirectory');
-  }),
-  sizeBytesOfTorrentsWithPayload: c.mapBy('torrentsWithPayload', 'sizeBytes'),
-  sizeBytesActual: c.sum('sizeBytesOfTorrentsWithPayload'),
 });

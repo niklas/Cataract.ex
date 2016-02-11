@@ -52,14 +52,18 @@ defmodule Cataract.LibraryWorker do
 
   ### Privates
 
-  def ensure_path(disk, [root]) do
+  def ensure_path(disk, path) when is_list(path) do
+    ensure_path(disk, Path.join(path))
+  end
+
+  def ensure_path(disk, path) when is_binary(path) do
     query = from w in Directory,
-            where: w.path == ^root
+            where: w.path == ^path
     case Repo.one(Directory.for_disk(query, disk)) do
       nil ->
         disk
-          |> Ecto.build_assoc(:directories)
-          |> Directory.changeset(%{path: root})
+          |> Ecto.build_assoc(:directories) # TODO set parent_id
+          |> Directory.changeset(%{path: path})
           |> Repo.insert!
           |> broadcast_create!
       directory ->
