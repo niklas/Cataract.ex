@@ -14,5 +14,10 @@ defmodule Cataract.TorrentView do
 
   has_one :payload_directory,
     serializer: Cataract.DirectoryView
+
+  def name(torrent, _conn) do
+    torrent.filename
+      |> String.replace(~r/\.torrent$/, "")
+  end
 end
 
