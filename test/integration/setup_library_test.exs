@@ -34,21 +34,16 @@ defmodule Cataract.SetupLibraryTest do
       [ "torrents"         ,  nil           ,  nil                              ],
       [ "CatPorn"          ,  "Torrents: 1" ,  "Accounted Space: 165.9 KiBytes" ],
       [ "Incoming"         ,  "Torrents: 2" ,  "Accounted Space: 143.6 KiBytes" ],
-      # TODO: these should NOT be here, they are torrents and not #root>li
-      [ nil, nil, nil],
-      [ nil, nil, nil],
-      [ nil, nil, nil],
     ]
 
     element = find_element(:css, ".directories")
     selectors = ["header", ".torrents_count", ".space"]
     actual = "<ul id=\"root\">" <> inner_html(element) <> "</ul>"
-      |> Exquery.tree
-      |> Exquery.Query.css("ul#root>li")
-      |> Enum.map(fn ({_line, kids})->
+      |> Floki.find("ul#root>li")
+      |> Enum.map(fn ({_tag, _at, kids})->
         Enum.map(selectors, fn (selector)->
-          case Exquery.Query.css(kids, selector) do
-            [{_, [{:text, text, _}]}] ->
+          case Floki.find(kids, selector) do
+            [{_t, _at, [text]}] ->
               text
               |> String.replace(~r/\s+/, " ")
               |> String.strip
@@ -58,6 +53,5 @@ defmodule Cataract.SetupLibraryTest do
       end)
 
     assert expected == actual
-    #assert visible_in_page?(~r/Accounted Space: 123kByte/), "Show how much used space is accounted for"
   end
 end
