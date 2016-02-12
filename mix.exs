@@ -55,7 +55,7 @@ defmodule Cataract.Mixfile do
      {:ja_serializer, "~> 0.7.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, github: "niklas/mix-test.watch", branch: "feature/single-file-first", only: :dev},
-     {:floki, "~> 0.7.1", only: :test},
+     {:floki, github: "niklas/floki", branch: "feature/pseudo-selectors-first-last", only: :test},
      {:hound, "~> 0.8.2"},
      {:gettext, "~> 0.9"},
      {:afunix, github: "tonyrog/afunix"},

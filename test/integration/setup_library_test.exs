@@ -38,8 +38,9 @@ defmodule Cataract.SetupLibraryTest do
     ] == find_list("ul.directories", "li", ["header", ".torrents_count", ".space"])
 
     assert [
-      [ "single" ],
       [ "multiple" ],
-    ] == find_list("ul.directories > li:last ul.torrents", "li", [".name"])
+      [ "single" ],
+    ] == find_list("ul.directories li:last ul.torrents", "li", [".name"])
+
   end
 end

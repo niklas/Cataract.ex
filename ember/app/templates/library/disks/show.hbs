@@ -21,7 +21,9 @@
       </span>
       <ul class="torrents">
         {{#each directory.torrents as |torrent|}}
-          <li class="name">{{torrent.name}}</li>
+          <li>
+            <span class="name">{{torrent.name}}</span>
+          </li>
         {{/each}}
       </ul>
     {{/if}}
