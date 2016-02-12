@@ -12,30 +12,17 @@ export default Ember.Service.extend({
     let socket = new Socket("/socket", {params: {token: window.userToken}});
     socket.connect();
     this.set('phoenix', socket );
+    this.jobChannel(); // always join
   },
 
   subscribe(modelName) {
-    let joined = this.get('channels');
-    // only join once
-    if ( Ember.isPresent( joined.get(modelName) ) ) { return; }
-
-    let socket = this.get('phoenix');
     let store  = this.get('store');
-    let joinParams = {};
-    let channel = socket.channel(`${modelName}:index`, joinParams);
+    let chan = this.channel(`${modelName}:index`);
 
-    channel.join().
-      receive("ignore", () => {
-        const error = `Could not connect to the ${modelName} channel`;
-        Ember.logger.warn(error);
-      }).
-      receive("ok", (channel) => {
-        joined.set(modelName, channel);
-      });
-    channel.on("create", (response) => {
+    chan.on("create", (response) => {
       store.pushPayload(response);
     });
-    channel.on("destroy", (response) => {
+    chan.on("destroy", (response) => {
       store.peek(modelName, response.id).then((model) => {
         store.unloadRecord(model);
       });
@@ -44,5 +31,37 @@ export default Ember.Service.extend({
     return this;
   },
 
+  jobChannel() {
+    let chan = this.channel("job:index");
+    return chan;
+  },
+
+  startJob(name, id) {
+    let chan = this.jobChannel()
+    chan.push(name, id);
+    return this;
+  },
+
+  channel(channelName) {
+    let joined = this.get('channels');
+    // only join once
+    if ( Ember.isPresent( joined.get(channelName) ) ) {
+        return joined.get(channelName);
+    }
+
+    let socket = this.get('phoenix');
+    let joinParams = {};
+    let chan = socket.channel(channelName, joinParams);
+    chan.join().
+      receive("ignore", () => {
+        const error = `Could not connect to the ${channelName} channel`;
+        Ember.logger.warn(error);
+      }).
+      receive("ok", (_msg) => {
+        joined.set(channelName, chan);
+      });
+
+    return chan;
+  }
 
 });

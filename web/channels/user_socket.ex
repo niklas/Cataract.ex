@@ -7,6 +7,7 @@ defmodule Cataract.UserSocket do
   channel "disk:*", Cataract.DiskChannel
   channel "directory:*", Cataract.DirectoryChannel
   channel "torrent:*", Cataract.TorrentChannel
+  channel "job:*", Cataract.JobChannel
 
   channel "test:*", Cataract.TestChannel
 

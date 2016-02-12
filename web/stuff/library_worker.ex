@@ -17,9 +17,16 @@ defmodule Cataract.LibraryWorker do
   end
 
   # verify if payload is still there, else => set nil
-  def verify_payload!(torrent) do
+  def verify_payload!(torrent, sources) do
     Logger.debug("########## Verifying payload for #{torrent.filename}")
-    torrent
+    torrent_path = Torrent.absolute_file_path(torrent)
+    payload_path = Torrent.absolute_payload_path(torrent)
+    unless TorrentFile.payload_exists?(torrent_path, payload_path) do
+      torrent
+        |> Torrent.update_payload_directory!(nil)
+        |> broadcast_update!
+        |> find_payload!(sources)
+    end
   end
 
   # search for payload on all disks

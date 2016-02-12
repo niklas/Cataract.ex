@@ -42,5 +42,36 @@ defmodule Cataract.SetupLibraryTest do
       [ "single" ],
     ] == find_list("ul.directories li:last ul.torrents", "li", [".name"])
 
+
+    # let's move a torrent without telling the library
+    File.rename fs_root <> "/Incoming/tails.png",
+                fs_root <> "/Archive/Very/tails.png"
+
+    click({:link_text, "Index"})
+    :timer.sleep(1000)
+
+    # expecte for multiple to disappear, and single move to Archive/Very
+    assert [
+      [ "private_torrents private_torrents"                  , nil                              ] ,
+      [ "torrents torrents"                                  , nil                              ] ,
+      [ "CatPorn Archive/Very/Deeply/nested_on_disk/CatPorn" , "1 Torrent using 165.9 KiBytes"  ] ,
+      [ "Incoming Incoming"                                  , nil                              ] ,
+      [ "Very Archive/Very"                                  , "1 Torrent using 71.7 KiBytes"   ] ,
+    ] == find_list("ul.directories", "li", ["header", ".stats"])
+
+    File.rename fs_root <> "/Incoming/banane.poem",
+                fs_root <> "/Archive/Very/banane.poem"
+
+    click({:link_text, "Index"})
+    :timer.sleep(1000)
+
+    # expecte for multiple to reappear
+    assert [
+      [ "private_torrents private_torrents"                  , nil                              ] ,
+      [ "torrents torrents"                                  , nil                              ] ,
+      [ "CatPorn Archive/Very/Deeply/nested_on_disk/CatPorn" , "1 Torrent using 165.9 KiBytes"  ] ,
+      [ "Incoming Incoming"                                  , nil                              ] ,
+      [ "Very Archive/Very"                                  , "2 Torrents using 143.6 KiBytes" ] ,
+    ] == find_list("ul.directories", "li", ["header", ".stats"])
   end
 end

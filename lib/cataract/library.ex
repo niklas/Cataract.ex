@@ -46,13 +46,12 @@ defmodule Cataract.Library do
 
   def handle_cast({:index, %Torrent{} = torrent}, status) do
     torrent = Repo.preload(torrent, [ :payload_directory, [directory: :disk] ])
+    sources = Disk
+      |> Repo.all
+      |> Enum.map( fn(d)-> {d, file_server(status, d.path)} end)
     if torrent.payload_directory do
-      Worker.verify_payload!(torrent)
+      Worker.verify_payload!(torrent, sources)
     else
-      Logger.debug("########## Finding payload for #{torrent.filename}")
-      sources = Disk
-        |> Repo.all
-        |> Enum.map( fn(d)-> {d, file_server(status, d.path)} end)
       Worker.find_payload!(torrent, sources)
     end
     {:noreply, status}

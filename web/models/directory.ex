@@ -36,6 +36,7 @@ defmodule Cataract.Directory do
   end
 
   def absolute_path(directory) do
+    directory = Cataract.Repo.preload(directory, :disk)
     Path.join(
       directory.disk.path,
       directory.path
