@@ -9,12 +9,20 @@ defmodule Cataract.HtmlHoundHelpers do
         Enum.map(selectors, fn (selector)->
           case Floki.find(kids, selector) do
             [{_t, _at, [text]}] ->
-              text
-              |> String.replace(~r/\s+/, " ")
-              |> String.strip
+              strip(text)
+            [element] ->
+              element
+              |> Floki.DeepText.get
+              |> strip
             _ -> nil
           end
         end)
       end)
+  end
+
+  def strip(text) do
+    text
+      |> String.replace(~r/\s+/, " ")
+      |> String.strip
   end
 end

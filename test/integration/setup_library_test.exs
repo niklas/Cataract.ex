@@ -31,11 +31,11 @@ defmodule Cataract.SetupLibraryTest do
     # wait for the indexers to run
 
     assert [
-      [ "private_torrents" ,  nil           ,  nil                              ],
-      [ "torrents"         ,  nil           ,  nil                              ],
-      [ "CatPorn"          ,  "Torrents: 1" ,  "Accounted Space: 165.9 KiBytes" ],
-      [ "Incoming"         ,  "Torrents: 2" ,  "Accounted Space: 143.6 KiBytes" ],
-    ] == find_list("ul.directories", "li", ["header", ".torrents_count", ".space"])
+      [ "private_torrents private_torrents"                  , nil                              ] ,
+      [ "torrents torrents"                                  , nil                              ] ,
+      [ "CatPorn Archive/Very/Deeply/nested_on_disk/CatPorn" , "1 Torrents using 165.9 KiBytes" ] ,
+      [ "Incoming Incoming"                                  , "2 Torrents using 143.6 KiBytes" ] ,
+    ] == find_list("ul.directories", "li", ["header", ".stats"])
 
     assert [
       [ "multiple" ],

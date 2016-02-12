@@ -1,4 +1,4 @@
-<header>
+<header class="title">
   {{model.name}}
   <small>
     {{model.path}}
@@ -8,21 +8,28 @@
 <ul class="directories">
   {{#each model.directories as |directory|}}
   <li>
-    <header>{{directory.name}}</header>
-    <small>{{directory.path}}</small>
+    <header>
+      {{directory.name}}
+      <small>{{directory.path}}</small>
+    </header>
     {{#if directory.torrents.length}}
-      <span class="torrents_count">
-        Torrents:
-        {{directory.torrents.length}}
-      </span>
-      <span class="space">
-        Accounted Space:
-        {{human-kilo-bytes directory.sizeBytes}}
+      <span class="stats">
+        <span class="torrents_count">
+          {{directory.torrents.length}}
+          Torrents
+        </span>
+        <span class="space">
+          using
+          {{human-kilo-bytes directory.sizeBytes}}
+        </span>
       </span>
       <ul class="torrents">
         {{#each directory.torrents as |torrent|}}
           <li>
-            <span class="name">{{torrent.name}}</span>
+              <span>
+                <span class="name">{{torrent.name}}</span>
+                <span class="space">{{human-kilo-bytes torrent.sizeBytes}}</span>
+              </span>
           </li>
         {{/each}}
       </ul>

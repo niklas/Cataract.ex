@@ -98,3 +98,46 @@
         }
     }
 }
+
+header.title {
+    font-size: 2rem
+}
+
+ul.directories {
+    @include block-list-container(
+      $font-size: 1rem
+    );
+    > li {
+        @include block-list-item();
+
+        header {
+            @include block-list-header(
+              $uppercase: false
+            );
+
+            small {
+                float: right;
+                margin-right: 1em;
+            }
+        }
+
+        > .stats {
+            font-size: 80%;
+            text-align: right;
+        }
+    }
+}
+
+ul.torrents {
+    @include block-list-container(
+      $font-size: 0.9rem
+    );
+    > li {
+        @include block-list-item();
+        .space {
+            font-size: 80%;
+            float: right;
+            margin-right: 1em;
+        }
+    }
+}
