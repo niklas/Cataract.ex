@@ -33,7 +33,7 @@ defmodule Cataract.SetupLibraryTest do
     assert [
       [ "private_torrents private_torrents"                  , nil                              ] ,
       [ "torrents torrents"                                  , nil                              ] ,
-      [ "CatPorn Archive/Very/Deeply/nested_on_disk/CatPorn" , "1 Torrents using 165.9 KiBytes" ] ,
+      [ "CatPorn Archive/Very/Deeply/nested_on_disk/CatPorn" , "1 Torrent using 165.9 KiBytes"  ] ,
       [ "Incoming Incoming"                                  , "2 Torrents using 143.6 KiBytes" ] ,
     ] == find_list("ul.directories", "li", ["header", ".stats"])
 

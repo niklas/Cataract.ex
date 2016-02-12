@@ -15,8 +15,7 @@
     {{#if directory.torrents.length}}
       <span class="stats">
         <span class="torrents_count">
-          {{directory.torrents.length}}
-          Torrents
+          {{pluralize directory.torrents.length "Torrent"}}
         </span>
         <span class="space">
           using
