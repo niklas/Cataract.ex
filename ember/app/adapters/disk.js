@@ -1,6 +1,6 @@
 import DS from 'ember-data';
+import ApplicationAdapter from 'cataract/adapters/application';
 
-export default DS.JSONAPIAdapter.extend({
-  namespace: 'api/1',
+export default ApplicationAdapter.extend({
   shouldReloadAll: function() { return true; },
 });

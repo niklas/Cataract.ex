@@ -10,9 +10,7 @@ defmodule Cataract.DiskController do
   end
 
   def show conn, %{"id" => id} do
-    disk =  Cataract.Repo.get(Disk, id)
-    Library.later(:index, disk)
-    render conn, model: disk
+    render conn, model: Repo.get(Disk, id)
   end
 
   def create conn, %{"attributes" => params} do

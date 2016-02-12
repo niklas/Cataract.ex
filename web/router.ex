@@ -32,5 +32,6 @@ defmodule Cataract.Router do
     pipe_through :api
     get "/transfers", TransferController, :index
     resources "/disks", DiskController
+    resources "/torrents", TorrentController
   end
 end

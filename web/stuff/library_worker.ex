@@ -96,8 +96,7 @@ defmodule Cataract.LibraryWorker do
 
   def broadcast_create!(%Torrent{} = torrent) do
     torrent
-      |> Repo.preload(:directory)
-      |> Repo.preload(:payload_directory)
+      |> Cataract.TorrentView.preload
       |> broadcast_create!("torrent:index", Cataract.TorrentView)
   end
 
